@@ -1,6 +1,6 @@
 # My Journo Journey
 
-A 24-week digital journalism course for Princess, built as an installable web app. Tablet first, works offline, no accounts. Progress is saved on the device.
+A 24-week digital journalism course, built as an installable web app. Tablet first, works offline, no accounts. Progress is saved on the device.
 
 - Requirements: [docs/REQUIREMENTS.md](docs/REQUIREMENTS.md)
 - Design mockups: kept locally in `design/` (not committed)
@@ -23,7 +23,7 @@ Development-only URL helpers:
 
 The app is a static site on Vercel. `vercel.json` handles page routing and caching for the service worker. Connect the repo in Vercel (framework: Vite) and every push to `main` deploys.
 
-When a new version is deployed, the app shows "A new version is ready" so Princess picks up new lessons.
+When a new version is deployed, the app shows "A new version is ready" and new lessons can be picked up.
 
 ## Project layout
 
@@ -102,4 +102,4 @@ All learner-facing text follows the plain English rules in [docs/REQUIREMENTS.md
 
 ## Backups
 
-Progress lives in the browser's storage on Princess's tablet. Settings has **Save backup** (downloads a JSON file) and **Restore from a backup**. Remind her to save a backup to Google Drive every week or two.
+Progress lives in the browser's storage on device. Settings has **Save backup** (downloads a JSON file) and **Restore from a backup**. Remind her to save a backup to Google Drive every week or two.
