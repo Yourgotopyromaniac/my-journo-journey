@@ -6,6 +6,7 @@ import { Box } from '@/components/ui/box'
 import { Input } from '@/components/ui/field'
 import { cn } from '@/lib/cn'
 import { useDocumentTitle, useProgressData } from '@/lib/hooks'
+import { isWeekUnlocked } from '@/lib/progress'
 import { buildLessonDocs, buildStaticDocs, search, type ResultKind, type SearchDoc } from './search-index'
 
 const GROUP_LABEL: Record<ResultKind, string> = {
@@ -61,7 +62,11 @@ export default function SearchPage() {
   }, [query, currentQ, setParams])
 
   const staticDocs = useMemo(() => buildStaticDocs(data), [data])
-  const results = useMemo(() => search([...(lessonDocs ?? []), ...staticDocs], query), [lessonDocs, staticDocs, query])
+  const results = useMemo(
+    // Hide anything from phases that are not open yet.
+    () => search([...(lessonDocs ?? []), ...staticDocs], query).filter((r) => r.week === undefined || isWeekUnlocked(r.week, data)),
+    [lessonDocs, staticDocs, query, data],
+  )
   const groups = GROUP_ORDER.map((kind) => ({ kind, items: results.filter((r) => r.kind === kind) })).filter((g) => g.items.length)
   const searching = query.trim().length > 1
 

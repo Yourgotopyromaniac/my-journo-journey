@@ -1,6 +1,6 @@
-import { ChevronDown, Flag } from 'lucide-react'
+import { ChevronDown, Flag, Lock } from 'lucide-react'
 import { useState } from 'react'
-import { Link } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { Page } from '@/app/AppLayout'
 import { Box } from '@/components/ui/box'
 import { Button } from '@/components/ui/button'
@@ -11,7 +11,8 @@ import { getPhase, PHASES, PROGRAMME } from '@/content/course'
 import { cn } from '@/lib/cn'
 import { formatDay, formatDayYear, formatRange } from '@/lib/dates'
 import { useDocumentTitle, useProgressData, useSchedule, useToday } from '@/lib/hooks'
-import { currentLearningWeek, weekProgress } from '@/lib/progress'
+import { showLockedToast } from '@/lib/locks'
+import { currentLearningWeek, isPhaseUnlocked, weekProgress } from '@/lib/progress'
 import { canTakeFlexWeek, programmeStatus, type Slot } from '@/lib/schedule'
 import { WEEKS } from '@/content/course'
 import { useProgress } from '@/store/progress'
@@ -34,6 +35,7 @@ function groupByPhase(slots: Slot[]): PhaseGroup[] {
 export default function RoadmapPage() {
   useDocumentTitle('Roadmap')
   const data = useProgressData()
+  const navigate = useNavigate()
   const slots = useSchedule()
   const date = useToday()
   const status = programmeStatus(slots, date)
@@ -85,6 +87,7 @@ export default function RoadmapPage() {
           const start = group.slots[0]
           const end = group.slots[group.slots.length - 1]
           const panelId = `phase-${group.phase}`
+          const locked = !isPhaseUnlocked(group.phase, data)
           let lastTrack: string | undefined
 
           return (
@@ -102,18 +105,25 @@ export default function RoadmapPage() {
                     aria-hidden
                     strokeWidth={1.8}
                   />
-                  <span className="font-semibold">
+                  <span className={cn('font-semibold', locked && 'text-ink-2')}>
                     Phase {phase.number} · {phase.title}
                     <span className="font-normal text-ink-3">
                       {' '}
                       · {weekSlots.length} weeks{hasFlex ? ' and a flex week' : ''}
                     </span>
                   </span>
-                  {start && end ? (
-                    <span className="hidden text-[0.8125rem] text-ink-3 sm:block">
-                      {formatDay(start.start)} to {formatDay(end.end)}
-                    </span>
-                  ) : null}
+                  <span className="flex items-center gap-2 text-[0.8125rem] text-ink-3">
+                    {start && end ? (
+                      <span className="hidden sm:inline">
+                        {formatDay(start.start)} to {formatDay(end.end)}
+                      </span>
+                    ) : null}
+                    {locked ? (
+                      <span className="inline-flex items-center gap-1 rounded-full border border-rule-soft bg-surface px-2 py-0.5 text-xs">
+                        <Lock className="size-3" aria-hidden strokeWidth={2} /> Locked
+                      </span>
+                    ) : null}
+                  </span>
                 </button>
               </h2>
               {isOpen ? (
@@ -148,6 +158,26 @@ export default function RoadmapPage() {
                         {showTrack ? (
                           <div className="kicker border-t border-rule-soft px-4 pt-3 pb-1 text-ink-3">{outline.track}</div>
                         ) : null}
+                        {locked ? (
+                          <button
+                            type="button"
+                            onClick={() => showLockedToast(slot.week, data, navigate)}
+                            aria-label={`Week ${slot.week}: ${outline.title}. Locked until Phase ${group.phase - 1} is complete.`}
+                            className={cn(
+                              'grid min-h-12 w-full grid-cols-[1.25rem_1fr_auto] items-center gap-3 border-t border-rule-soft px-4 py-2 text-left text-ink-3 hover:bg-sunken/40 sm:grid-cols-[1.25rem_4rem_1fr_7rem_6rem]',
+                              showTrack && 'border-t-0',
+                            )}
+                          >
+                            <Lock className="size-4 justify-self-center" aria-hidden strokeWidth={1.8} />
+                            <span className="hidden text-[0.8125rem] sm:block">Week {slot.week}</span>
+                            <span className="min-w-0">
+                              <span className="sm:hidden">{slot.week}. </span>
+                              {outline.title}
+                            </span>
+                            <span className="hidden text-[0.8125rem] sm:block">{formatRange(slot.start, slot.end)}</span>
+                            <span />
+                          </button>
+                        ) : (
                         <Link
                           to={`/week/${slot.week}`}
                           className={cn(
@@ -173,6 +203,7 @@ export default function RoadmapPage() {
                             ) : null}
                           </span>
                         </Link>
+                        )}
                       </li>
                     )
                   })}

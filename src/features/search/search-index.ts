@@ -12,6 +12,8 @@ export interface SearchDoc {
   href: string
   context: string
   body: string
+  /** Week the result belongs to, so results from locked phases can be hidden. */
+  week?: number
 }
 
 // Lesson text is loaded as plain text only when search is opened.
@@ -45,6 +47,7 @@ export async function buildLessonDocs(): Promise<SearchDoc[]> {
       if (!week || !lesson) return
       docs.push({
         kind: 'lesson',
+        week: week.number,
         title: lesson.title,
         href: `/week/${week.number}/lesson/${lesson.slug}`,
         context: `Week ${week.number} · Lesson`,
@@ -58,7 +61,7 @@ export async function buildLessonDocs(): Promise<SearchDoc[]> {
 export function buildStaticDocs(data: ProgressData): SearchDoc[] {
   const docs: SearchDoc[] = []
   for (const w of WEEKS) {
-    docs.push({ kind: 'week', title: `Week ${w.number}: ${w.title}`, href: `/week/${w.number}`, context: 'Week', body: w.summary })
+    docs.push({ kind: 'week', week: w.number, title: `Week ${w.number}: ${w.title}`, href: `/week/${w.number}`, context: 'Week', body: w.summary })
   }
   for (const t of GLOSSARY) {
     docs.push({
@@ -72,6 +75,7 @@ export function buildStaticDocs(data: ProgressData): SearchDoc[] {
   for (const c of CHECKLISTS) {
     docs.push({
       kind: 'checklist',
+      week: c.week,
       title: c.title,
       href: `/toolkit/${c.id}`,
       context: `Checklist · Week ${c.week}`,

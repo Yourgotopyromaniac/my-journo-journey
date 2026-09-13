@@ -25,7 +25,9 @@ export function daysBetween(from: IsoDate, to: IsoDate): number {
 }
 
 // Development only: ?date=2026-09-30 pretends today is that date, to preview later weeks.
-const devDate = import.meta.env.DEV ? new URLSearchParams(globalThis.location?.search ?? '').get('date') : null
+const devDate = import.meta.env.DEV
+  ? new URLSearchParams(globalThis.location?.search ?? '').get('date')
+  : null
 
 /** Today's date on this device, in local time. */
 export function today(now: Date = new Date()): IsoDate {
@@ -93,7 +95,7 @@ export function formatRangeWords(start: IsoDate, end: IsoDate): string {
 /** Friendly time of day greeting. */
 export function greeting(now: Date = new Date()): string {
   const h = now.getHours()
-  if (h < 12) return 'Good morning'
-  if (h < 17) return 'Good afternoon'
-  return 'Good evening'
+  if (h < 12) return 'Ohayō'
+  if (h < 17) return "Kon'nichiwa"
+  return 'Konbanwa'
 }

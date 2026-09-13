@@ -1,6 +1,6 @@
 import { Check, RotateCcw } from 'lucide-react'
 import { useState } from 'react'
-import { Link, useParams } from 'react-router'
+import { Link, Navigate, useParams } from 'react-router'
 import { Page } from '@/app/AppLayout'
 import NotFoundPage from '@/app/NotFoundPage'
 import { Box } from '@/components/ui/box'
@@ -9,16 +9,20 @@ import { getWeekOutline } from '@/content/course'
 import { getChecklist } from '@/content/toolkit'
 import { cn } from '@/lib/cn'
 import { formatDayYear } from '@/lib/dates'
-import { useDocumentTitle } from '@/lib/hooks'
+import { useDocumentTitle, useProgressData } from '@/lib/hooks'
+import { isWeekUnlocked } from '@/lib/progress'
 
 /** A checklist to run through each time she works on a story. Ticks are not saved, so it starts fresh every time. */
 export default function ChecklistPage() {
   const { id = '' } = useParams()
   const checklist = getChecklist(id)
+  const data = useProgressData()
   useDocumentTitle(checklist?.title ?? 'Page not found')
   const [ticked, setTicked] = useState<Set<string>>(new Set())
 
   if (!checklist) return <NotFoundPage />
+  // Checklists from phases that are not open yet stay hidden.
+  if (!isWeekUnlocked(checklist.week, data)) return <Navigate to="/toolkit" replace />
 
   const total = checklist.groups.reduce((n, g) => n + g.items.length, 0)
   const outline = getWeekOutline(checklist.week)

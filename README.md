@@ -52,6 +52,10 @@ Plans for every unwritten week are in [docs/CONTENT-OUTLINES.md](docs/CONTENT-OU
 
 Weeks that have no folder yet show "being written" in the app. Release each week at least two weeks before its start date.
 
+### Phase locks
+
+Phases open one at a time (`isPhaseUnlocked` in `src/lib/progress.ts`). Every page under `/week/:week` and `/phase/:phase/review` is wrapped in `WeekRouteLock` (`src/lib/locks.tsx`), which sends locked visits to the roadmap with a toast. Search and the Toolkit hide items from locked phases. To test later phases in development, run `__dev.completeUpTo(6)` in the browser console.
+
 ### Phase review quizzes
 
 Add `src/content/phases/phase-N.ts` exporting `{ phase, quiz }`. It appears automatically as the last item in the final week of that phase, at `/phase/N/review`. Give each question `lessonSlug` and `lessonWeek` so the explanation can link back to the right lesson.

@@ -19,6 +19,19 @@
         var s = localStorage.getItem('mjj-text-size')
         if (s) document.documentElement.dataset.textSize = s
       } catch (e) {}
+
+      // Catch Chrome's install offer as early as possible. It can fire before the app has loaded,
+      // and it only fires once per page load, so it is stored here for the app to use later.
+      window.__installPrompt = null
+      window.addEventListener('beforeinstallprompt', function (e) {
+        e.preventDefault()
+        window.__installPrompt = e
+        window.dispatchEvent(new Event('mjj-install-ready'))
+      })
+      window.addEventListener('appinstalled', function () {
+        window.__installPrompt = null
+        window.dispatchEvent(new Event('mjj-install-ready'))
+      })
     </script>
   </head>
   <body>

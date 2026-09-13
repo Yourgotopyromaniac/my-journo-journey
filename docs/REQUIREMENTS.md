@@ -208,7 +208,7 @@ Priority: **M** = must have for launch · **S** = should have · **C** = could h
 
 ### 5.3 Roadmap — M
 - Timeline of all phases and weeks with real calendar dates, status (not started / in progress / complete) and flex weeks.
-- **Soft gating:** everything is viewable; the recommended next step is highlighted; incomplete earlier items are flagged, not locked.
+- **Phase locks (added 13 Sep 2026):** Phase 1 is open from the start. Each later phase opens only when every week of the phase before it is complete, including its review quiz. Locked weeks show a lock and a friendly toast, and cannot be opened by link or search. Within an open phase, all weeks stay open (soft gating), and the recommended next step is highlighted.
 - Take a flex week (shifts later dates; confirmation required; reversible).
 
 ### 5.4 Week (module) page — M

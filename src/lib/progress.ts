@@ -100,6 +100,28 @@ export function isPhaseComplete(phase: number, data: ProgressData): boolean {
   return weeks.length > 0 && weeks.every((w) => weekProgress(w.number, data).complete)
 }
 
+/**
+ * Phases open one at a time. Phase 1 is always open; each later phase opens once every week
+ * of the phase before it is complete, including its review quiz. Weeks inside an open phase
+ * are all open, so she can still move around within a phase.
+ */
+export function isPhaseUnlocked(phase: number, data: ProgressData): boolean {
+  if (phase <= 1) return true
+  return isPhaseComplete(phase - 1, data) && isPhaseUnlocked(phase - 1, data)
+}
+
+export function isWeekUnlocked(week: number, data: ProgressData): boolean {
+  const outline = WEEKS.find((w) => w.number === week)
+  return outline ? isPhaseUnlocked(outline.phase, data) : false
+}
+
+/** The highest phase she can open right now. */
+export function currentUnlockedPhase(data: ProgressData): number {
+  let phase = 1
+  while (phase < 5 && isPhaseUnlocked(phase + 1, data)) phase += 1
+  return phase
+}
+
 export type Pacing =
   | { state: 'ahead'; weeks: number }
   | { state: 'on-track' }

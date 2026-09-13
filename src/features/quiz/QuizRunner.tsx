@@ -81,7 +81,7 @@ export function QuizRunner({
   const [checked, setChecked] = useState<Record<string, boolean>>({})
   const [finished, setFinished] = useState(false)
   const [confirmLeave, setConfirmLeave] = useState(false)
-  const correctStrings = ['Correct✨', 'Scholarr', 'You know book o 😌']
+  const correctStrings = ['Correct ✨', 'Scholarr', 'You know book o 😌', 'Subarashī 🔥']
   const wrongStrings = ['Suberuu', 'Not quite', 'Nope 😔']
   const question = attempt.questions[index]!
   const total = attempt.questions.length

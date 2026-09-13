@@ -1,17 +1,13 @@
 import { ArrowRight } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
+import { InstallApp } from '@/components/InstallApp'
 import { Button } from '@/components/ui/button'
 import { PHASES, PROGRAMME } from '@/content/course'
 import { requestPersistentStorage } from '@/lib/storage'
 import { formatLong } from '@/lib/dates'
 import { useDocumentTitle } from '@/lib/hooks'
 import { useProgress } from '@/store/progress'
-
-interface InstallPromptEvent extends Event {
-  prompt: () => Promise<void>
-  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>
-}
 
 const STEPS = ['welcome', 'how', 'install'] as const
 
@@ -21,26 +17,10 @@ export default function WelcomePage() {
   const onboarded = useProgress((s) => s.onboarded)
   const completeOnboarding = useProgress((s) => s.completeOnboarding)
   const [step, setStep] = useState<(typeof STEPS)[number]>('welcome')
-  const [installEvent, setInstallEvent] = useState<InstallPromptEvent | null>(null)
-  const [installed, setInstalled] = useState(() => window.matchMedia('(display-mode: standalone)').matches)
 
   useEffect(() => {
     if (onboarded) navigate('/', { replace: true })
   }, [onboarded, navigate])
-
-  useEffect(() => {
-    const onPrompt = (e: Event) => {
-      e.preventDefault()
-      setInstallEvent(e as InstallPromptEvent)
-    }
-    const onInstalled = () => setInstalled(true)
-    window.addEventListener('beforeinstallprompt', onPrompt)
-    window.addEventListener('appinstalled', onInstalled)
-    return () => {
-      window.removeEventListener('beforeinstallprompt', onPrompt)
-      window.removeEventListener('appinstalled', onInstalled)
-    }
-  }, [])
 
   const finish = async () => {
     await requestPersistentStorage()
@@ -125,30 +105,7 @@ export default function WelcomePage() {
               safe.
             </p>
             <div className="mt-6 max-w-xl rounded-[var(--radius-box)] border border-rule-soft bg-surface p-5">
-              {installed ? (
-                <p className="font-medium">The app is installed. You are all set.</p>
-              ) : installEvent ? (
-                <>
-                  <p className="text-ink-2">Tap the button to add it to your home screen.</p>
-                  <Button
-                    className="mt-3"
-                    onClick={async () => {
-                      await installEvent.prompt()
-                      const { outcome } = await installEvent.userChoice
-                      if (outcome === 'accepted') setInstalled(true)
-                      setInstallEvent(null)
-                    }}
-                  >
-                    Install the app
-                  </Button>
-                </>
-              ) : (
-                <ol className="list-decimal space-y-1.5 pl-5 text-ink-2">
-                  <li>In Chrome, tap the menu (three dots) at the top right.</li>
-                  <li>Tap “Add to home screen” or “Install app”.</li>
-                  <li>Open My Journo Journey from your home screen from now on.</li>
-                </ol>
-              )}
+              <InstallApp />
             </div>
             <p className="mt-4 max-w-xl text-[0.9375rem] text-ink-3">
               Also, save a backup of your progress every week or two. You can do this in Settings.

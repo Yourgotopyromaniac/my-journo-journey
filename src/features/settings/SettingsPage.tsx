@@ -2,6 +2,7 @@ import { Download, Upload } from 'lucide-react'
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation } from 'react-router'
 import { Page } from '@/app/AppLayout'
+import { InstallApp } from '@/components/InstallApp'
 import { Box } from '@/components/ui/box'
 import { Button } from '@/components/ui/button'
 import { ChoiceGroup } from '@/components/ui/choice-group'
@@ -104,6 +105,18 @@ export default function SettingsPage() {
       </section>
 
       <section className="mt-8 max-w-3xl">
+        <h2 className="mb-2.5 text-sm font-semibold">App</h2>
+        <Box>
+          <Row
+            title="Install on this device"
+            description="Puts the app on your home screen, lets lessons work without internet, and helps keep your progress safe."
+          >
+            <InstallApp compact />
+          </Row>
+        </Box>
+      </section>
+
+      <section className="mt-8 max-w-3xl">
         <h2 className="mb-2.5 text-sm font-semibold">Your progress</h2>
         <Box className="divide-y divide-rule-soft">
           <Row
@@ -184,7 +197,7 @@ export default function SettingsPage() {
       </section>
 
       <p className="mt-10 text-xs text-ink-3">
-        My Journo Journey · Made for {PROGRAMME.learnerName} with ❤️ {PROGRAMME.rewardsFrom} 🙂‍↔️ · Your progress stays
+        My Journo Journey · Made for {PROGRAMME.learnerName} with ❤️ from {PROGRAMME.rewardsFrom} 😌 · Your progress stays
         on this device.
       </p>
 

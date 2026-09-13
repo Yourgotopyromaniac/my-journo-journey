@@ -10,7 +10,7 @@ import { CHECKLISTS } from '@/content/toolkit'
 import type { Resource } from '@/content/types'
 import { cn } from '@/lib/cn'
 import { useDocumentTitle, useProgressData } from '@/lib/hooks'
-import { currentLearningWeek } from '@/lib/progress'
+import { currentLearningWeek, isWeekUnlocked } from '@/lib/progress'
 
 const KIND_LABEL: Record<Resource['kind'], string> = {
   article: 'Article',
@@ -28,7 +28,8 @@ export default function ToolkitPage() {
   const [query, setQuery] = useState('')
   const [kind, setKind] = useState<Resource['kind'] | 'all'>('all')
 
-  const resources = allResources()
+  const resources = allResources().filter((r) => isWeekUnlocked(r.week, data))
+  const checklists = CHECKLISTS.filter((c) => isWeekUnlocked(c.week, data))
   const kinds = [...new Set(resources.map((r) => r.kind))]
   const shownResources = kind === 'all' ? resources : resources.filter((r) => r.kind === kind)
 
@@ -74,11 +75,11 @@ export default function ToolkitPage() {
 
       <section id="checklists" className="mt-8 max-w-4xl scroll-mt-6">
         <h2 className="mb-3 font-serif text-2xl font-semibold">Checklists</h2>
-        {CHECKLISTS.length === 0 ? (
+        {checklists.length === 0 ? (
           <Box className="p-5 text-[0.9375rem] text-ink-2">Checklists are added as you reach the weeks that teach them.</Box>
         ) : (
           <div className="grid gap-3 sm:grid-cols-2">
-            {CHECKLISTS.map((c) => {
+            {checklists.map((c) => {
               const upcoming = c.week > learningWeek
               return (
                 <Link
