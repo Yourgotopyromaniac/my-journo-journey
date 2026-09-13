@@ -9,14 +9,30 @@ import { ConfirmDialog } from '@/components/ui/dialog'
 import { downloadBackup, parseBackup, type ParsedBackup } from '@/lib/backup'
 import { addDays, formatDayYear, formatRangeWords } from '@/lib/dates'
 import { useDocumentTitle } from '@/lib/hooks'
+import { PROGRAMME } from '@/content/course'
 import { useProgress, type TextSize, type Theme } from '@/store/progress'
 
-function Row({ title, description, children, id }: { title: string; description?: ReactNode; children: ReactNode; id?: string }) {
+function Row({
+  title,
+  description,
+  children,
+  id,
+}: {
+  title: string
+  description?: ReactNode
+  children: ReactNode
+  id?: string
+}) {
   return (
-    <div id={id} className="flex scroll-mt-6 flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
+    <div
+      id={id}
+      className="flex scroll-mt-6 flex-col gap-3 px-5 py-4 sm:flex-row sm:items-center sm:justify-between"
+    >
       <div className="max-w-md">
         <div className="font-semibold">{title}</div>
-        {description ? <div className="mt-0.5 text-[0.8125rem] leading-relaxed text-ink-3">{description}</div> : null}
+        {description ? (
+          <div className="mt-0.5 text-[0.8125rem] leading-relaxed text-ink-3">{description}</div>
+        ) : null}
       </div>
       <div className="shrink-0">{children}</div>
     </div>
@@ -95,10 +111,12 @@ export default function SettingsPage() {
             title="Back up your progress"
             description={
               <>
-                Your progress is saved on this tablet only. Save a backup file to Google Drive every week or two, in case the
-                tablet is lost or the browser data is cleared.
+                Your progress is saved on this tablet only. Save a backup file to Google Drive every week or
+                two, in case the tablet is lost or the browser data is cleared.
                 <span className="mt-1 block">
-                  {lastBackupAt ? `Last backup: ${formatDayYear(lastBackupAt.slice(0, 10))}.` : 'You have not made a backup yet.'}
+                  {lastBackupAt
+                    ? `Last backup: ${formatDayYear(lastBackupAt.slice(0, 10))}.`
+                    : 'You have not made a backup yet.'}
                 </span>
               </>
             }
@@ -107,13 +125,19 @@ export default function SettingsPage() {
               onClick={() => {
                 downloadBackup()
                 markBackedUp()
-                setMessage({ tone: 'ok', text: 'Backup file saved to your downloads. Move it to Google Drive to keep it safe.' })
+                setMessage({
+                  tone: 'ok',
+                  text: 'Backup file saved to your downloads. Move it to Google Drive to keep it safe.',
+                })
               }}
             >
               <Download /> Save backup
             </Button>
           </Row>
-          <Row title="Restore from a backup" description="Replaces the progress on this device with the progress in the file.">
+          <Row
+            title="Restore from a backup"
+            description="Replaces the progress on this device with the progress in the file."
+          >
             <input
               ref={fileInput}
               type="file"
@@ -136,7 +160,10 @@ export default function SettingsPage() {
           ) : null}
         </Box>
         {message ? (
-          <p role="status" className={message.tone === 'ok' ? 'mt-3 text-sm text-success' : 'mt-3 text-sm text-accent'}>
+          <p
+            role="status"
+            className={message.tone === 'ok' ? 'mt-3 text-sm text-success' : 'mt-3 text-sm text-accent'}
+          >
             {message.text}
           </p>
         ) : null}
@@ -145,7 +172,10 @@ export default function SettingsPage() {
       <section className="mt-8 max-w-3xl">
         <h2 className="mb-2.5 text-sm font-semibold">Start over</h2>
         <Box>
-          <Row title="Clear all progress" description="Deletes your lesson progress, quiz results, journal and news diary from this device.">
+          <Row
+            title="Clear all progress"
+            description="Deletes your lesson progress, quiz results, journal and news diary from this device."
+          >
             <Button variant="danger" onClick={() => setConfirmReset(true)}>
               Clear progress
             </Button>
@@ -153,7 +183,10 @@ export default function SettingsPage() {
         </Box>
       </section>
 
-      <p className="mt-10 text-xs text-ink-3">My Journo Journey · Made for Princess · No accounts, no tracking. Your data stays on this device.</p>
+      <p className="mt-10 text-xs text-ink-3">
+        My Journo Journey · Made for {PROGRAMME.learnerName} with ❤️ {PROGRAMME.rewardsFrom} 🙂‍↔️ · Your progress stays
+        on this device.
+      </p>
 
       <ConfirmDialog
         open={pending !== null}
@@ -162,8 +195,8 @@ export default function SettingsPage() {
         description={
           pending ? (
             <>
-              This backup was made on {formatDayYear(pending.exportedAt.slice(0, 10))}. It will replace all progress on this
-              device. Save a backup of your current progress first if you might need it.
+              This backup was made on {formatDayYear(pending.exportedAt.slice(0, 10))}. It will replace all
+              progress on this device. Save a backup of your current progress first if you might need it.
             </>
           ) : null
         }

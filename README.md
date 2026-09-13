@@ -60,6 +60,14 @@ Add `src/content/phases/phase-N.ts` exporting `{ phase, quiz }`. It appears auto
 
 Add `src/content/checklists/<id>.ts` exporting a `ToolkitChecklist`. Set `week` to the week that teaches it.
 
+### Treat coupons
+
+When every item in a week is done, the app shows a "Week complete" message with an ice cream or snack coupon (drawn in `src/lib/coupon.ts`). "Send to …" opens the tablet's share sheet with the image attached; where file sharing is not supported, the image downloads instead. All coupons stay on the Coupons page (`/rewards`).
+
+- Change who redeems coupons with `rewardsFrom` in `src/content/course.ts`.
+- Each week's code is fixed, for example `JJ-W02-X9N8`, so the same coupon sent twice has the same code. Keep a note of codes you have honoured.
+- In development, `window.__progress.getState()` in the browser console lets you set progress to test this.
+
 ### Assignments that complete themselves
 
 Set `doneWhenDiaryEntries: 5` on an assignment to tick it off once the news diary has that many entries.

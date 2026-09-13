@@ -75,10 +75,10 @@ By the end of the programme Princess should:
 
 ### 3.2 Schedule
 
-- **Week 1 starts Monday 21 September 2026.**
-- **Flex week 1** is fixed over Christmas (21–27 Dec 2026).
-- **Flex week 2** floats: by default it sits at the end (15–21 Mar 2027), but Princess can take it at any point (e.g. exams). Taking it early shifts all later weeks by one.
-- **Programme ends 21 March 2027.**
+- **Week 1 starts Monday 14 September 2026.** (Moved forward one week from 21 September on 13 Sep 2026.)
+- **Flex week 1** is fixed over Christmas (21–27 Dec 2026), between Weeks 14 and 15.
+- **Flex week 2** floats: by default it sits at the end (8–14 Mar 2027), but Princess can take it at any point (e.g. exams). Taking it early shifts all later weeks by one.
+- **Programme ends 14 March 2027.**
 
 ### 3.3 Roadmap
 
@@ -86,44 +86,44 @@ By the end of the programme Princess should:
 
 | Wk | Dates | Module | Key practical output |
 |---|---|---|---|
-| 1 | 21–27 Sep | What journalism is for; how news works today; how Nigeria's media is set up (legacy, digital-native, broadcast, wires; newsroom roles) | Media audit of 5 Nigerian outlets; start news diary |
-| 2 | 28 Sep–4 Oct | News values; the 5 Ws & H; inverted pyramid; writing ledes | Lede-writing drill; inverted-pyramid rewrite |
-| 3 | 5–11 Oct | Story structure; attribution and quotes; style guides and house style (British English); headline basics | Hard news story from a supplied fact set |
-| 4 | 12–18 Oct | Interviewing: preparation, question types, listening, notes and recording; on/off the record; building sources | Practice interview + write-up; source map |
-| 5 | 19–25 Oct | Ethics: Code of Ethics for Nigerian Journalists; accuracy, fairness, independence; "brown envelope" culture; conflicts of interest; minimising harm; corrections | Ethics case-study analyses |
-| 6 | 26 Oct–1 Nov | Nigerian media law: Constitution (s.22, s.39); defamation; FOI Act 2011; Cybercrimes Act (as amended); Copyright Act 2022; Nigeria Data Protection Act 2023; broadcast regulation | Personal pre-publication legal checklist · **Phase 1 review quiz** |
+| 1 | 14–20 Sep | What journalism is for; how news works today; how Nigeria's media is set up (legacy, digital-native, broadcast, wires; newsroom roles) | Media audit of 5 Nigerian outlets; start news diary |
+| 2 | 21–27 Sep | News values; the 5 Ws & H; inverted pyramid; writing ledes | Lede-writing drill; inverted-pyramid rewrite |
+| 3 | 28 Sep–4 Oct | Story structure; attribution and quotes; style guides and house style (British English); headline basics | Hard news story from a supplied fact set |
+| 4 | 5–11 Oct | Interviewing: preparation, question types, listening, notes and recording; on/off the record; building sources | Practice interview + write-up; source map |
+| 5 | 12–18 Oct | Ethics: Code of Ethics for Nigerian Journalists; accuracy, fairness, independence; "brown envelope" culture; conflicts of interest; minimising harm; corrections | Ethics case-study analyses |
+| 6 | 19–25 Oct | Nigerian media law: Constitution (s.22, s.39); defamation; FOI Act 2011; Cybercrimes Act (as amended); Copyright Act 2022; Nigeria Data Protection Act 2023; broadcast regulation | Personal pre-publication legal checklist · **Phase 1 review quiz** |
 
 #### Phase 2 — Truth & Verification (Weeks 7–9)
 
 | Wk | Dates | Module | Key practical output |
 |---|---|---|---|
-| 7 | 2–8 Nov | Research: primary vs secondary sources; SIFT; advanced search; public records in Nigeria (e.g. CAC search, NBS, budget documents, gazettes) | Research trail for a local issue |
-| 8 | 9–15 Nov | Fact-checking and misinformation: claim checking; image/video verification; deepfakes and AI-generated content; how Nigerian fact-checkers work | Three written fact-checks |
-| 9 | 16–22 Nov | Numbers for journalists: percentages vs percentage points; mean vs median; inflation; reading statistical reports; misleading charts | "Spot the error" critique of 5 stories · **Phase 2 review quiz** |
+| 7 | 26 Oct–1 Nov | Research: primary vs secondary sources; SIFT; advanced search; public records in Nigeria (e.g. CAC search, NBS, budget documents, gazettes) | Research trail for a local issue |
+| 8 | 2–8 Nov | Fact-checking and misinformation: claim checking; image/video verification; deepfakes and AI-generated content; how Nigerian fact-checkers work | Three written fact-checks |
+| 9 | 9–15 Nov | Numbers for journalists: percentages vs percentage points; mean vs median; inflation; reading statistical reports; misleading charts | "Spot the error" critique of 5 stories · **Phase 2 review quiz** |
 
 #### Phase 3 — Digital Craft (Weeks 10–16)
 
 | Wk | Dates | Module | Key practical output |
 |---|---|---|---|
-| 10 | 23–29 Nov | Writing for the web; SEO for journalists; linking; CMS basics (private WordPress practice site) | Web explainer, formatted in a CMS (private) |
-| 11 | 30 Nov–6 Dec | Features and storytelling: nut graf; scene-setting; profiles; self-editing | 600–800 word profile |
-| 12 | 7–13 Dec | Social media journalism; finding sources and stories on social; digital security (2FA, Signal, metadata); handling online harassment | Social story-hunt + verification plan; security setup checklist |
-| 13 | 14–20 Dec | Visual journalism on a tablet: photography and captions; ethical editing; Canva graphics; simple Datawrapper charts | Captioned 5-image photo story; one chart |
+| 10 | 16–22 Nov | Writing for the web; SEO for journalists; linking; CMS basics (private WordPress practice site) | Web explainer, formatted in a CMS (private) |
+| 11 | 23–29 Nov | Features and storytelling: nut graf; scene-setting; profiles; self-editing | 600–800 word profile |
+| 12 | 30 Nov–6 Dec | Social media journalism; finding sources and stories on social; digital security (2FA, Signal, metadata); handling online harassment | Social story-hunt + verification plan; security setup checklist |
+| 13 | 7–13 Dec | Visual journalism on a tablet: photography and captions; ethical editing; Canva graphics; simple Datawrapper charts | Captioned 5-image photo story; one chart |
+| 14 | 14–20 Dec | Mobile video: framing, audio, vertical vs horizontal; editing on Android; captions; short-form social video | 60–90 second video explainer |
 | — | 21–27 Dec | **Flex week 1** (Christmas) | Catch up or rest |
-| 14 | 28 Dec–3 Jan | Mobile video: framing, audio, vertical vs horizontal; editing on Android; captions; short-form social video | 60–90 second video explainer |
-| 15 | 4–10 Jan | Audio basics (recording and editing on a tablet; writing for the ear) · AI tools in the newsroom: uses, limits and ethics | 2-minute audio report; AI tool evaluation |
-| 16 | 11–17 Jan | **Core skills capstone:** a reported story on a general-interest topic, using the full workflow (research → interviews → verification → writing → visuals → legal check) | Capstone story · **Phase 3 review quiz** |
+| 15 | 28 Dec–3 Jan | Audio basics (recording and editing on a tablet; writing for the ear) · AI tools in the newsroom: uses, limits and ethics | 2-minute audio report; AI tool evaluation |
+| 16 | 4–10 Jan | **Core skills capstone:** a reported story on a general-interest topic, using the full workflow (research → interviews → verification → writing → visuals → legal check) | Capstone story · **Phase 3 review quiz** |
 
 #### Phase 4 — Specialisation (Weeks 17–22)
 
 | Wk | Dates | Module | Key practical output |
 |---|---|---|---|
-| 17 | 18–24 Jan | **Politics I — How Nigeria is governed:** the constitution; arms and tiers of government; how a bill becomes law; key institutions (INEC, CBN, EFCC, the courts); finding primary documents | Explainer on a current bill or policy |
-| 18 | 25–31 Jan | **Politics II — Covering politics and elections:** campaigns; polls; electoral law basics; election-day reporting; sensitive reporting on ethnicity and religion; fact-checking politicians | Campaign-claim fact-check; election coverage plan |
-| 19 | 1–7 Feb | **Politics III — Following the money:** budgets; FOI in practice; accountability reporting; political explainers | Drafted FOI request; budget-based story |
-| 20 | 8–14 Feb | **Entertainment I — The industries:** Nollywood, Afrobeats, reality TV, comedy and creators; the business (streaming, box office, charts, labels, distribution) | Industry explainer |
-| 21 | 15–21 Feb | **Entertainment II — Reporting craft:** celebrity and artist interviews; reviews and criticism; profiles; event coverage; social-first entertainment formats | A review + an artist/industry profile |
-| 22 | 22–28 Feb | **Entertainment III — Ethics, law and the crossover:** PR pressure and paid coverage; rumours and privacy; defamation risk; music and film rights; celebrities in politics and activism; creative economy policy | Crossover story (where politics meets entertainment) · **Phase 4 review quiz** |
+| 17 | 11–17 Jan | **Politics I — How Nigeria is governed:** the constitution; arms and tiers of government; how a bill becomes law; key institutions (INEC, CBN, EFCC, the courts); finding primary documents | Explainer on a current bill or policy |
+| 18 | 18–24 Jan | **Politics II — Covering politics and elections:** campaigns; polls; electoral law basics; election-day reporting; sensitive reporting on ethnicity and religion; fact-checking politicians | Campaign-claim fact-check; election coverage plan |
+| 19 | 25–31 Jan | **Politics III — Following the money:** budgets; FOI in practice; accountability reporting; political explainers | Drafted FOI request; budget-based story |
+| 20 | 1–7 Feb | **Entertainment I — The industries:** Nollywood, Afrobeats, reality TV, comedy and creators; the business (streaming, box office, charts, labels, distribution) | Industry explainer |
+| 21 | 8–14 Feb | **Entertainment II — Reporting craft:** celebrity and artist interviews; reviews and criticism; profiles; event coverage; social-first entertainment formats | A review + an artist/industry profile |
+| 22 | 15–21 Feb | **Entertainment III — Ethics, law and the crossover:** PR pressure and paid coverage; rumours and privacy; defamation risk; music and film rights; celebrities in politics and activism; creative economy policy | Crossover story (where politics meets entertainment) · **Phase 4 review quiz** |
 
 > Note: the 2027 general election cycle should be active during the politics weeks. Official dates and timetables will be confirmed from INEC sources when that content is written.
 
@@ -131,9 +131,9 @@ By the end of the programme Princess should:
 
 | Wk | Dates | Module | Key practical output |
 |---|---|---|---|
-| 23 | 1–7 Mar | **Beat capstone:** one politics and one entertainment piece to publishable standard; self-edit; curate best 6–8 pieces | Two capstone pieces; curated work list |
-| 24 | 8–14 Mar | **Getting hired:** how Nigerian newsrooms recruit; writing tests; CV and cover letter; pitching an editor; interview preparation; launching a professional presence when ready; post-programme plan | CV, cover letter, pitch, 6-month plan · **Final review quiz** |
-| — | 15–21 Mar | **Flex week 2** (default position; can be moved) | |
+| 23 | 22–28 Feb | **Beat capstone:** one politics and one entertainment piece to publishable standard; self-edit; curate best 6–8 pieces | Two capstone pieces; curated work list |
+| 24 | 1–7 Mar | **Getting hired:** how Nigerian newsrooms recruit; writing tests; CV and cover letter; pitching an editor; interview preparation; launching a professional presence when ready; post-programme plan | CV, cover letter, pitch, 6-month plan · **Final review quiz** |
+| — | 8–14 Mar | **Flex week 2** (default position; can be moved) | |
 
 ### 3.4 Use of the supplied reference files
 
@@ -196,7 +196,7 @@ Priority: **M** = must have for launch · **S** = should have · **C** = could h
 ### 5.1 Onboarding — M
 - First-run welcome personalised to Princess, explaining how the programme works (weekly rhythm, quizzes, flex weeks, privacy).
 - Prompt to **install the app** to the home screen and explain backups.
-- Confirm start date (default 21 Sep 2026).
+- Confirm start date (set in src/content/course.ts; currently 14 Sep 2026).
 
 ### 5.2 Dashboard — M
 - Greeting with her name and the current programme week and dates.
@@ -341,7 +341,7 @@ Week 1 starts in 8 days, so v1 ships in stages with content always ahead of her 
 |---|---|---|
 | **M0 — Requirements** | Now | This document approved |
 | **M1 — Design** | Before build | Mockups of key screens in 2–3 directions → chosen direction → refined key screens |
-| **M2 — Launch (by 21 Sep)** | 20 Sep 2026 | App shell, design system, onboarding, dashboard, roadmap, week page, lesson reader, assignments, checkpoint quizzes, journal, news diary, settings + backup, PWA; **Weeks 1–2 content** |
+| **M2 — Launch (by 14 Sep)** | 13 Sep 2026 | App shell, design system, onboarding, dashboard, roadmap, week page, lesson reader, assignments, checkpoint quizzes, journal, news diary, settings + backup, PWA; **Weeks 1–2 content** |
 | **M3 — Rolling content** | Ongoing | Content released ≥ 2 weeks ahead of schedule; phase quizzes with each phase |
 | **M4 — Enhancements** | Oct 2026 | Spaced review, toolkit & glossary, milestones, search |
 

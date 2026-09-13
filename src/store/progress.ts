@@ -1,6 +1,7 @@
 import { del, get, set } from 'idb-keyval'
 import { create } from 'zustand'
 import { createJSONStorage, persist, type StateStorage } from 'zustand/middleware'
+import { PROGRAMME } from '@/content/course'
 import type { NewsValue } from '@/content/types'
 import { addDays, today, type IsoDate } from '@/lib/dates'
 
@@ -64,6 +65,7 @@ export interface DiaryEntry {
 
 export interface ProgressData {
   onboarded: boolean
+  /** Kept for older backups. The schedule always uses PROGRAMME.startDate. */
   startDate: IsoDate
   flexWeekTakenOn: IsoDate | null
   theme: Theme
@@ -79,6 +81,18 @@ export interface ProgressData {
   lastBackupAt: string | null
   /** Phases whose "complete" card she has closed on the dashboard. */
   dismissedMilestones: number[]
+  /** Treat coupons, one per completed week, keyed by week number. */
+  rewards: Record<string, Reward>
+}
+
+export interface Reward {
+  week: number
+  code: string
+  earnedAt: string
+  /** When she first saw the "week complete" message. */
+  seenAt?: string
+  /** When she last shared or saved the coupon. */
+  sentAt?: string
 }
 
 interface ProgressActions {
@@ -105,6 +119,9 @@ interface ProgressActions {
   deleteDiaryEntry: (id: string) => void
 
   dismissMilestone: (phase: number) => void
+  earnReward: (week: number, code: string) => void
+  markRewardSeen: (week: number) => void
+  markRewardSent: (week: number) => void
   markBackedUp: () => void
   replaceAll: (data: ProgressData) => void
   resetAll: () => void
@@ -114,7 +131,7 @@ export type ProgressState = ProgressData & ProgressActions
 
 export const initialData = (): ProgressData => ({
   onboarded: false,
-  startDate: '2026-09-21',
+  startDate: PROGRAMME.startDate,
   flexWeekTakenOn: null,
   theme: 'system',
   textSize: 'standard',
@@ -128,6 +145,7 @@ export const initialData = (): ProgressData => ({
   lastLesson: null,
   lastBackupAt: null,
   dismissedMilestones: [],
+  rewards: {},
 })
 
 export const lessonKey = (week: number, slug: string) => `w${week}/${slug}`
@@ -279,6 +297,23 @@ export const useProgress = create<ProgressState>()(
 
       dismissMilestone: (phase) =>
         setState((s) => ({ dismissedMilestones: [...new Set([...s.dismissedMilestones, phase])] })),
+
+      earnReward: (week, code) =>
+        setState((s) =>
+          s.rewards[week] ? s : { rewards: { ...s.rewards, [week]: { week, code, earnedAt: now() } } },
+        ),
+
+      markRewardSeen: (week) =>
+        setState((s) => {
+          const r = s.rewards[week]
+          return r && !r.seenAt ? { rewards: { ...s.rewards, [week]: { ...r, seenAt: now() } } } : s
+        }),
+
+      markRewardSent: (week) =>
+        setState((s) => {
+          const r = s.rewards[week]
+          return r ? { rewards: { ...s.rewards, [week]: { ...r, sentAt: now() } } } : s
+        }),
 
       markBackedUp: () => setState({ lastBackupAt: now() }),
 

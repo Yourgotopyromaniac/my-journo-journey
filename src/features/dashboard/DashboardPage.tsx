@@ -174,6 +174,22 @@ export default function DashboardPage() {
             </Button>
           </Box>
 
+          <Box className="flex items-center justify-between gap-3 p-4">
+            <div>
+              <h2 className="text-sm font-semibold">Treat coupons</h2>
+              <p className="mt-0.5 text-[0.8125rem] text-ink-3">
+                {Object.keys(data.rewards).length === 0
+                  ? 'Finish a week to earn an ice cream or snack'
+                  : `${Object.keys(data.rewards).length} earned so far`}
+              </p>
+            </div>
+            <Button variant="ghost" size="sm" asChild>
+              <Link to="/rewards">
+                View <ChevronRight />
+              </Link>
+            </Button>
+          </Box>
+
           {reviewDue > 0 ? (
             <Box className="flex items-center justify-between gap-3 p-4">
               <div>

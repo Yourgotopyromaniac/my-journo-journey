@@ -11,14 +11,16 @@ export const NEWS_VALUES: { value: NewsValue; label: string }[] = [
 ]
 
 export const PROGRAMME = {
-  learnerName: 'Princess',
+  learnerName: 'Tunmi',
   /** Monday of Week 1. */
-  startDate: '2026-09-21',
+  startDate: '2026-09-14',
   /** Monday of the fixed Christmas flex week. */
   christmasFlexStart: '2026-12-21',
   totalWeeks: 24,
   passMark: 0.75,
   diaryTarget: 5,
+  /** The person who redeems treat coupons. Shown on each coupon. */
+  rewardsFrom: 'Biola',
 } as const
 
 export const PHASES: Phase[] = [

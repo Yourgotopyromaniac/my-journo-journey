@@ -3,32 +3,43 @@ import { useId } from 'react'
 import { cn } from '@/lib/cn'
 
 const control =
-  'w-full rounded-[var(--radius-control)] border border-rule bg-surface px-3.5 text-base text-ink placeholder:text-ink-3 focus:border-accent focus:outline-none focus-visible:outline-2 focus-visible:outline-offset-0 focus-visible:outline-accent'
+  'w-full rounded-[var(--radius-control)] border border-rule bg-surface px-3.5 text-base text-ink transition-[border-color,box-shadow] placeholder:text-ink-3 focus:border-ink-2 focus:ring-3 focus:ring-accent/15 focus:outline-none aria-[invalid=true]:border-accent aria-[invalid=true]:ring-accent/20'
 
 export function Field({
   label,
   hint,
+  error,
+  optional = false,
   children,
   className,
 }: {
   label: string
   hint?: string
-  children: (props: { id: string; 'aria-describedby'?: string }) => ReactNode
+  error?: string
+  optional?: boolean
+  children: (props: { id: string; 'aria-describedby'?: string; 'aria-invalid'?: boolean }) => ReactNode
   className?: string
 }) {
   const id = useId()
   const hintId = hint ? `${id}-hint` : undefined
+  const errorId = error ? `${id}-error` : undefined
+  const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={id} className="text-sm font-semibold text-ink">
+      <label htmlFor={id} className="flex items-baseline gap-1.5 text-sm font-semibold text-ink">
         {label}
+        {optional ? <span className="text-xs font-normal text-ink-3">Optional</span> : null}
       </label>
-      {hint ? (
-        <p id={hintId} className="-mt-1 text-[0.8125rem] text-ink-3">
+      {children({ id, 'aria-describedby': describedBy, 'aria-invalid': error ? true : undefined })}
+      {error ? (
+        <p id={errorId} className="text-[0.8125rem] text-accent">
+          {error}
+        </p>
+      ) : hint ? (
+        <p id={hintId} className="text-[0.8125rem] text-ink-3">
           {hint}
         </p>
       ) : null}
-      {children({ id, 'aria-describedby': hintId })}
     </div>
   )
 }

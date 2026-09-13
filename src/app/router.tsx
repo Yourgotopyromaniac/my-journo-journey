@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 import { createBrowserRouter, Navigate, Outlet, ScrollRestoration, useLocation } from 'react-router'
+import { RewardWatcher } from '@/features/rewards/RewardWatcher'
 import { useProgress } from '@/store/progress'
 import { AppLayout } from './AppLayout'
 import { RouteError } from './RouteError'
@@ -14,6 +15,7 @@ function Gate() {
     <>
       <ScrollRestoration />
       <Outlet />
+      <RewardWatcher />
       <UpdatePrompt />
     </>
   )
@@ -41,6 +43,7 @@ export const router = createBrowserRouter([
           { path: '/toolkit', lazy: page(() => import('@/features/toolkit/ToolkitPage')) },
           { path: '/toolkit/:id', lazy: page(() => import('@/features/toolkit/ChecklistPage')) },
           { path: '/search', lazy: page(() => import('@/features/search/SearchPage')) },
+          { path: '/rewards', lazy: page(() => import('@/features/rewards/RewardsPage')) },
           { path: '/settings', lazy: page(() => import('@/features/settings/SettingsPage')) },
           { path: '*', lazy: page(() => import('./NotFoundPage')) },
         ],

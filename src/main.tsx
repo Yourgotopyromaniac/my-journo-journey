@@ -15,6 +15,13 @@ whenHydrated().then(() => {
   if (import.meta.env.DEV && new URLSearchParams(location.search).has('onboarded')) {
     useProgress.getState().completeOnboarding()
   }
+  // Development only: console helpers. Type __dev.help() in the browser console.
+  if (import.meta.env.DEV) {
+    import('@/lib/devtools').then(({ devtools }) => {
+      Object.assign(window, { __progress: useProgress, __dev: devtools })
+      console.info('Dev helpers ready. Type __dev.help() for a list.')
+    })
+  }
   root.render(
     <StrictMode>
       <ThemeSync />

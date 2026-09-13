@@ -21,24 +21,24 @@ Dates assume the floating flex week is not taken early. If Princess takes it ear
 
 | Week | Title | Starts | Release by |
 |---|---|---|---|
-| 7 | Research and records | 2 Nov 2026 | 19 Oct |
-| 8 | Fact-checking | 9 Nov | 26 Oct |
-| 9 | Numbers for journalists (+ Phase 2 review) | 16 Nov | 2 Nov |
-| 10 | Writing for the web | 23 Nov | 9 Nov |
-| 11 | Features and profiles | 30 Nov | 16 Nov |
-| 12 | Social media and safety | 7 Dec | 23 Nov |
-| 13 | Photos and charts | 14 Dec | 30 Nov |
-| 14 | Mobile video | 28 Dec | 14 Dec |
-| 15 | Audio and AI tools | 4 Jan 2027 | 21 Dec |
-| 16 | Core skills capstone (+ Phase 3 review) | 11 Jan | 28 Dec |
-| 17 | How Nigeria is governed | 18 Jan | 4 Jan |
-| 18 | Covering elections | 25 Jan | 11 Jan |
-| 19 | Following the money | 1 Feb | 18 Jan |
-| 20 | The entertainment industries | 8 Feb | 25 Jan |
-| 21 | Entertainment reporting | 15 Feb | 1 Feb |
-| 22 | Ethics and the crossover (+ Phase 4 review) | 22 Feb | 8 Feb |
-| 23 | Beat capstone | 1 Mar | 15 Feb |
-| 24 | Getting hired (+ final review) | 8 Mar | 22 Feb |
+| 7 | Research and records | 26 Oct 2026 | 12 Oct |
+| 8 | Fact-checking | 2 Nov | 19 Oct |
+| 9 | Numbers for journalists (+ Phase 2 review) | 9 Nov | 26 Oct |
+| 10 | Writing for the web | 16 Nov | 2 Nov |
+| 11 | Features and profiles | 23 Nov | 9 Nov |
+| 12 | Social media and safety | 30 Nov | 16 Nov |
+| 13 | Photos and charts | 7 Dec | 23 Nov |
+| 14 | Mobile video | 14 Dec | 30 Nov |
+| 15 | Audio and AI tools | 28 Dec | 14 Dec |
+| 16 | Core skills capstone (+ Phase 3 review) | 4 Jan 2027 | 21 Dec |
+| 17 | How Nigeria is governed | 11 Jan | 28 Dec |
+| 18 | Covering elections | 18 Jan | 4 Jan |
+| 19 | Following the money | 25 Jan | 11 Jan |
+| 20 | The entertainment industries | 1 Feb | 18 Jan |
+| 21 | Entertainment reporting | 8 Feb | 25 Jan |
+| 22 | Ethics and the crossover (+ Phase 4 review) | 15 Feb | 1 Feb |
+| 23 | Beat capstone | 22 Feb | 8 Feb |
+| 24 | Getting hired (+ final review) | 1 Mar | 15 Feb |
 
 ---
 
@@ -289,8 +289,6 @@ Goal: Princess can produce web-ready stories, features, photos, charts, short vi
 
 **Quiz focus:** shot types; audio fixes; captions; vertical versus horizontal; crediting user footage.
 
-**Note:** This week follows the Christmas flex week. Keep it realistic for someone coming back from a break.
-
 **Verify before writing**
 - Free Android video editors (for example, CapCut) still available, free features, and any terms of use or data concerns to mention.
 - YouTube unlisted uploads from the Android app.
@@ -319,6 +317,8 @@ Goal: Princess can produce web-ready stories, features, photos, charts, short vi
 - **AI tool test (45 min).** Use a free AI assistant for three tasks (interview questions, summary, headlines). Check every output. Note errors. Deliverable: short evaluation.
 
 **Quiz focus:** writing for the ear; AI limitations; when AI use must be disclosed; checking AI transcription.
+
+**Note:** This week follows the Christmas flex week. Keep it realistic for someone coming back from a break.
 
 **Verify before writing**
 - Free Android audio recording and editing apps.
@@ -407,7 +407,7 @@ Goal: Princess understands how politics and entertainment work in Nigeria and ca
 
 **Quiz focus:** election stages; INEC's role; reporting polls; hate speech; results claims.
 
-**Time-sensitive: research this close to release.** This week runs in late January 2027, during the build-up to the 2027 general elections.
+**Time-sensitive: research this close to release.** This week runs in mid to late January 2027, during the build-up to the 2027 general elections.
 
 **Verify before writing**
 - INEC's official timetable for the 2027 general elections (dates may change; use INEC's own release).

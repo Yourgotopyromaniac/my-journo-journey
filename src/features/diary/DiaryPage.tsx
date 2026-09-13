@@ -4,16 +4,16 @@ import { useSearchParams } from 'react-router'
 import { Page } from '@/app/AppLayout'
 import { Box } from '@/components/ui/box'
 import { Button } from '@/components/ui/button'
-import { ConfirmDialog, Dialog } from '@/components/ui/dialog'
-import { Field, Input, Textarea } from '@/components/ui/field'
+import { ConfirmDialog } from '@/components/ui/dialog'
 import { NEWS_VALUES, PROGRAMME } from '@/content/course'
 import { cn } from '@/lib/cn'
 import { formatDay, formatDayName, type IsoDate } from '@/lib/dates'
 import { useDocumentTitle, useSchedule, useToday } from '@/lib/hooks'
 import { programmeStatus } from '@/lib/schedule'
 import { useProgress, type DiaryEntry } from '@/store/progress'
+import { DiaryEntryDialog, type DiaryFormState } from './DiaryEntryDialog'
 
-type FormState = Omit<DiaryEntry, 'id' | 'createdAt'> & { id?: string }
+type FormState = DiaryFormState
 
 const emptyForm = (date: IsoDate): FormState => ({ date, headline: '', outlet: '', link: '', why: '', values: [] })
 
@@ -117,87 +117,18 @@ export default function DiaryPage() {
         </div>
       )}
 
-      <Dialog
-        open={form !== null}
-        onOpenChange={(o) => !o && setForm(null)}
-        title={form?.id ? 'Edit story' : 'Add a story'}
-        description="Keep it short. A sentence or two is enough."
-      >
-        {form ? (
-          <form
-            className="flex flex-col gap-4"
-            onSubmit={(e) => {
-              e.preventDefault()
-              if (!form.headline.trim() || !form.outlet.trim()) return
-              saveDiaryEntry({ ...form, headline: form.headline.trim(), outlet: form.outlet.trim(), link: form.link.trim() })
-              setForm(null)
-            }}
-          >
-            <Field label="Headline">
-              {(p) => (
-                <Input {...p} required value={form.headline} onChange={(e) => setForm({ ...form, headline: e.target.value })} />
-              )}
-            </Field>
-            <div className="grid gap-4 sm:grid-cols-[1fr_11rem]">
-              <Field label="Where you saw it" hint="Outlet or account">
-                {(p) => (
-                  <Input
-                    {...p}
-                    required
-                    placeholder="For example, Premium Times"
-                    value={form.outlet}
-                    onChange={(e) => setForm({ ...form, outlet: e.target.value })}
-                  />
-                )}
-              </Field>
-              <Field label="Date" hint="When you saw it">
-                {(p) => (
-                  <Input {...p} type="date" required max={date} value={form.date} onChange={(e) => setForm({ ...form, date: e.target.value })} />
-                )}
-              </Field>
-            </div>
-            <Field label="Link (optional)">
-              {(p) => (
-                <Input {...p} type="url" inputMode="url" placeholder="https://" value={form.link} onChange={(e) => setForm({ ...form, link: e.target.value })} />
-              )}
-            </Field>
-            <Field label="Why it caught your attention">
-              {(p) => <Textarea {...p} className="min-h-24" value={form.why} onChange={(e) => setForm({ ...form, why: e.target.value })} />}
-            </Field>
-            <fieldset>
-              <legend className="text-sm font-semibold">News values it shows</legend>
-              <p className="text-[0.8125rem] text-ink-3">You learn these in Week 2. Choose any that fit.</p>
-              <div className="mt-2 flex flex-wrap gap-2">
-                {NEWS_VALUES.map((nv) => {
-                  const on = form.values.includes(nv.value)
-                  return (
-                    <button
-                      key={nv.value}
-                      type="button"
-                      aria-pressed={on}
-                      onClick={() =>
-                        setForm({ ...form, values: on ? form.values.filter((v) => v !== nv.value) : [...form.values, nv.value] })
-                      }
-                      className={cn(
-                        'min-h-11 rounded-full border px-3.5 text-sm transition-colors',
-                        on ? 'border-ink bg-ink text-paper' : 'border-rule bg-surface text-ink-2 hover:text-ink',
-                      )}
-                    >
-                      {nv.label}
-                    </button>
-                  )
-                })}
-              </div>
-            </fieldset>
-            <div className="mt-2 flex justify-end gap-2">
-              <Button variant="secondary" onClick={() => setForm(null)}>
-                Cancel
-              </Button>
-              <Button type="submit">Save story</Button>
-            </div>
-          </form>
-        ) : null}
-      </Dialog>
+      {form ? (
+        <DiaryEntryDialog
+          key={form.id ?? 'new'}
+          initial={form}
+          today={date}
+          onClose={() => setForm(null)}
+          onSave={(entry) => {
+            saveDiaryEntry(entry)
+            setForm(null)
+          }}
+        />
+      ) : null}
 
       <ConfirmDialog
         open={toDelete !== null}

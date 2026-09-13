@@ -66,3 +66,11 @@ export function summariseAttempts(attempts: QuizAttempt[] | undefined, total: nu
     total,
   }
 }
+
+export const randomizeResultMessage = (messages: string[], correct: boolean) => {
+  if (!messages.length) {
+    if (correct) return 'Correct'
+    else return 'Not quite'
+  }
+  return messages[Math.floor(Math.random() * messages.length)]
+}

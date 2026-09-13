@@ -65,6 +65,22 @@ export default function WeekPage() {
               <WeekChecklist week={week} data={data} />
             </section>
 
+            {data.rewards[week] ? (
+              <Box className="mt-3 flex flex-wrap items-center justify-between gap-3 p-4">
+                <p className="text-[0.9375rem]">
+                  <span className="font-semibold">Week complete.</span>{' '}
+                  <span className="text-ink-2">You earned a treat coupon for this week.</span>
+                </p>
+                <Button variant="secondary" size="sm" asChild>
+                  <Link to="/rewards">See your coupon</Link>
+                </Button>
+              </Box>
+            ) : (
+              <p className="mt-3 text-[0.8125rem] text-ink-3">
+                Finish everything in this plan to earn a treat coupon.
+              </p>
+            )}
+
             {isLastWeekOfPhase(week) ? (
               <p className="mt-3 text-[0.8125rem] text-ink-3">
                 This is the last week of Phase {phase.number}. The phase review quiz covers every week of the phase, so do it

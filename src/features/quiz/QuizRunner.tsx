@@ -9,7 +9,15 @@ import { getLesson } from '@/content'
 import { PROGRAMME } from '@/content/course'
 import type { Question, Quiz } from '@/content/types'
 import { cn } from '@/lib/cn'
-import { hasAnswer, isCorrect, passed, shuffle, summariseAttempts, type Response } from '@/lib/quiz'
+import {
+  hasAnswer,
+  isCorrect,
+  passed,
+  randomizeResultMessage,
+  shuffle,
+  summariseAttempts,
+  type Response,
+} from '@/lib/quiz'
 import { useProgress } from '@/store/progress'
 import { QuestionView } from './QuestionView'
 
@@ -34,7 +42,9 @@ function lessonLinkFor(question: Question, defaultWeek: number | undefined) {
   const week = question.lessonWeek ?? defaultWeek
   if (!question.lessonSlug || week === undefined) return undefined
   const lesson = getLesson(week, question.lessonSlug)
-  return lesson ? { href: `/week/${week}/lesson/${question.lessonSlug}`, title: lesson.title, week } : undefined
+  return lesson
+    ? { href: `/week/${week}/lesson/${question.lessonSlug}`, title: lesson.title, week }
+    : undefined
 }
 
 export function QuizRunner({
@@ -71,7 +81,8 @@ export function QuizRunner({
   const [checked, setChecked] = useState<Record<string, boolean>>({})
   const [finished, setFinished] = useState(false)
   const [confirmLeave, setConfirmLeave] = useState(false)
-
+  const correctStrings = ['Correct✨', 'Scholarr', 'You know book o 😌']
+  const wrongStrings = ['Suberuu', 'Not quite', 'Nope 😔']
   const question = attempt.questions[index]!
   const total = attempt.questions.length
   const passMarkCount = Math.ceil(total * PROGRAMME.passMark)
@@ -122,7 +133,9 @@ export function QuizRunner({
           <X /> Close
         </Button>
         <div className="truncate font-serif text-lg font-semibold">{heading}</div>
-        <div className="w-20 text-right text-sm text-ink-3">{started && !finished ? `${index + 1} / ${total}` : ''}</div>
+        <div className="w-20 text-right text-sm text-ink-3">
+          {started && !finished ? `${index + 1} / ${total}` : ''}
+        </div>
       </div>
     </header>
   )
@@ -135,7 +148,8 @@ export function QuizRunner({
           <div className="kicker text-accent">{kicker}</div>
           <h1 className="mt-2 font-serif text-[2.5rem] leading-tight font-semibold">{quiz.title}</h1>
           <p className="mt-3 text-lg text-ink-2">
-            {total} questions. You pass with {passMarkCount} or more right. You can try as many times as you like.
+            {total} questions. You pass with {passMarkCount} or more right. You can try as many times as you
+            like.
           </p>
           <div className="mt-5 space-y-2 text-[0.9375rem] text-ink-2">{intro}</div>
           {summary.taken ? (
@@ -166,7 +180,9 @@ export function QuizRunner({
         {header}
         <main className="mx-auto max-w-2xl px-5 py-12 sm:px-8">
           <SegmentedProgress total={total} done={total} label="Quiz finished" />
-          <div className={cn('kicker mt-10', didPass ? 'text-success' : 'text-accent')}>{didPass ? 'Passed' : 'Not passed yet'}</div>
+          <div className={cn('mt-10 kicker', didPass ? 'text-success' : 'text-accent')}>
+            {didPass ? 'Passed' : 'Not passed yet'}
+          </div>
           <h1 className="mt-2 font-serif text-[2.75rem] leading-tight font-semibold">
             {correct} of {total} right.
           </h1>
@@ -192,7 +208,10 @@ export function QuizRunner({
                         <div className="text-[0.9375rem] font-medium">{q.prompt}</div>
                         <p className="mt-1 text-sm leading-relaxed text-ink-2">{q.explanation}</p>
                         {link ? (
-                          <Link to={link.href} className="mt-1 inline-flex min-h-11 items-center text-sm font-medium text-accent">
+                          <Link
+                            to={link.href}
+                            className="mt-1 inline-flex min-h-11 items-center text-sm font-medium text-accent"
+                          >
                             Read again: {link.title}
                             {link.week !== week ? ` (Week ${link.week})` : ''}
                           </Link>
@@ -202,7 +221,9 @@ export function QuizRunner({
                   })}
                 </ul>
               </Box>
-              <p className="mt-2 text-xs text-ink-3">These questions will come back in your review in a few days.</p>
+              <p className="mt-2 text-xs text-ink-3">
+                These questions will come back in your review in a few days.
+              </p>
             </section>
           ) : null}
 
@@ -253,9 +274,16 @@ export function QuizRunner({
         <div aria-live="polite">
           {isChecked ? (
             <Box className="mt-5 p-4">
-              <div className={cn('flex items-center gap-2 font-semibold', correctNow ? 'text-success' : 'text-accent')}>
+              <div
+                className={cn(
+                  'flex items-center gap-2 font-semibold',
+                  correctNow ? 'text-success' : 'text-accent',
+                )}
+              >
                 {correctNow ? <Check className="size-5" /> : <X className="size-5" />}
-                {correctNow ? 'Correct' : 'Not quite'}
+                {correctNow
+                  ? randomizeResultMessage(correctStrings, true)
+                  : randomizeResultMessage(wrongStrings, false)}
               </div>
               <p className="mt-1.5 font-serif text-[1.0625rem] leading-relaxed">{question.explanation}</p>
               {link ? (
@@ -277,7 +305,11 @@ export function QuizRunner({
               {index + 1 < total ? 'Next question' : 'See your result'} <ArrowRight />
             </Button>
           ) : (
-            <Button size="lg" onClick={check} disabled={question.type !== 'order' && !hasAnswer(question, responses[question.id])}>
+            <Button
+              size="lg"
+              onClick={check}
+              disabled={question.type !== 'order' && !hasAnswer(question, responses[question.id])}
+            >
               Check answer
             </Button>
           )}

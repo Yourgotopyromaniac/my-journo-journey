@@ -7,7 +7,7 @@ export type Slot =
 
 export interface ScheduleOptions {
   startDate?: IsoDate
-  /** Monday of the week Princess chose for her floating flex week, if she has taken it. */
+  /** Monday of the week the learner chose for her floating flex week, if she has taken it. */
   flexWeekTakenOn?: IsoDate | null
 }
 
@@ -67,7 +67,7 @@ export function slotForWeek(slots: Slot[], week: number): Extract<Slot, { kind: 
 }
 
 /**
- * The content week the calendar says Princess should be on.
+ * The content week the calendar says the learner should be on.
  * During a flex week this is the next week to come.
  */
 export function scheduledWeek(slots: Slot[], date: IsoDate): number {

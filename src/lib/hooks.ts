@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { useShallow } from 'zustand/react/shallow'
+import { PROGRAMME } from '@/content/course'
 import { snapshot, useProgress, type ProgressData } from '@/store/progress'
 import { today, type IsoDate } from './dates'
 import { buildSchedule, type Slot } from './schedule'
@@ -20,10 +20,10 @@ export function useToday(): IsoDate {
 }
 
 export function useSchedule(): Slot[] {
-  const { startDate, flexWeekTakenOn } = useProgress(
-    useShallow((s) => ({ startDate: s.startDate, flexWeekTakenOn: s.flexWeekTakenOn })),
-  )
-  return useMemo(() => buildSchedule({ startDate, flexWeekTakenOn }), [startDate, flexWeekTakenOn])
+  // The start date always comes from course.ts. The copy saved on the device is ignored,
+  // so changing the start date there takes effect for everyone.
+  const flexWeekTakenOn = useProgress((s) => s.flexWeekTakenOn)
+  return useMemo(() => buildSchedule({ startDate: PROGRAMME.startDate, flexWeekTakenOn }), [flexWeekTakenOn])
 }
 
 /** All saved data as a plain object. Re-renders when any of it changes. */

@@ -1,3 +1,4 @@
+import { X } from 'lucide-react'
 import { AlertDialog, Dialog as RadixDialog } from 'radix-ui'
 import type { ReactNode } from 'react'
 import { cn } from '@/lib/cn'
@@ -60,6 +61,7 @@ export function Dialog({
   title,
   description,
   children,
+  footer,
   className,
 }: {
   open: boolean
@@ -67,20 +69,40 @@ export function Dialog({
   title: string
   description?: string
   children: ReactNode
+  /** Buttons pinned to the bottom, so they stay visible when the content scrolls. */
+  footer?: ReactNode
   className?: string
 }) {
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
       <RadixDialog.Portal>
         <RadixDialog.Overlay className={overlay} />
-        <RadixDialog.Content className={cn(panel, 'max-h-[calc(100dvh-2rem)] overflow-y-auto', className)}>
-          <RadixDialog.Title className="font-serif text-2xl font-semibold">{title}</RadixDialog.Title>
-          {description ? (
-            <RadixDialog.Description className="mt-1 text-[0.9375rem] text-ink-2">{description}</RadixDialog.Description>
-          ) : (
-            <RadixDialog.Description className="sr-only">{title}</RadixDialog.Description>
-          )}
-          <div className="mt-5">{children}</div>
+        <RadixDialog.Content
+          className={cn(panel, 'flex max-h-[calc(100dvh-2rem)] flex-col p-0', className)}
+          // Keep the date picker and other popovers inside the dialog from closing it.
+          onInteractOutside={(e) => {
+            if ((e.target as HTMLElement | null)?.closest('[data-radix-popper-content-wrapper]')) e.preventDefault()
+          }}
+        >
+          <div className="flex items-start justify-between gap-4 border-b border-rule-soft px-6 pt-5 pb-4">
+            <div>
+              <RadixDialog.Title className="font-serif text-2xl leading-tight font-semibold">{title}</RadixDialog.Title>
+              {description ? (
+                <RadixDialog.Description className="mt-1 text-[0.9375rem] text-ink-2">{description}</RadixDialog.Description>
+              ) : (
+                <RadixDialog.Description className="sr-only">{title}</RadixDialog.Description>
+              )}
+            </div>
+            <RadixDialog.Close asChild>
+              <Button variant="ghost" size="icon" className="-mt-1 -mr-2 shrink-0" aria-label="Close">
+                <X />
+              </Button>
+            </RadixDialog.Close>
+          </div>
+          <div className="min-h-0 flex-1 overflow-y-auto px-6 py-5">{children}</div>
+          {footer ? (
+            <div className="flex flex-wrap items-center justify-end gap-2 border-t border-rule-soft px-6 py-4">{footer}</div>
+          ) : null}
         </RadixDialog.Content>
       </RadixDialog.Portal>
     </RadixDialog.Root>
