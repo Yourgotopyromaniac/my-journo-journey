@@ -6,10 +6,20 @@ import remarkGfm from 'remark-gfm'
 import { defineConfig } from 'vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const mdxPlugin = mdx({ remarkPlugins: [remarkGfm] })
+
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    { enforce: 'pre', ...mdx({ remarkPlugins: [remarkGfm] }) },
+    {
+      enforce: 'pre',
+      ...mdxPlugin,
+      // Leave `?raw` imports alone: search loads lesson files as plain text.
+      transform(code, id) {
+        if (id.includes('?raw')) return undefined
+        return mdxPlugin.transform(code, id)
+      },
+    },
     react({ include: /\.(mdx|js|jsx|ts|tsx)$/ }),
     tailwindcss(),
     VitePWA({

@@ -71,7 +71,7 @@ export default function WelcomePage() {
               Welcome, {PROGRAMME.learnerName}.
             </h1>
             <p className="mt-5 max-w-xl font-serif text-[1.375rem] leading-snug text-ink-2 italic">
-              This is your own course in digital journalism. Over 24 weeks you will learn to find, check and write news, then
+              This is your own course in digital journalism. Over 24 weeks you will learn to find, fact check and write news, then
               focus on politics and entertainment.
             </p>
             <div className="mt-10">

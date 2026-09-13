@@ -95,7 +95,7 @@ for (const target of TARGETS) {
         }
       }
       if (file.endsWith('.mdx') && !/^\s*[<{]/.test(line)) {
-        for (const sentence of line.split(/(?<=[.!?]["”’)]?)\s+/)) {
+        for (const sentence of line.split(/(?<=[.!?]["”’)*_]*)\s+/)) {
           const words = sentence.replace(/[*_`#>[\]()]/g, '').trim().split(/\s+/).filter(Boolean)
           if (words.length > MAX_WORDS) {
             console.warn(`warn   ${rel}:${i + 1}  long sentence (${words.length} words): "${sentence.slice(0, 60)}..."`)

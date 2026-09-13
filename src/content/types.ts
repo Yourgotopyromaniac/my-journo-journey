@@ -62,6 +62,8 @@ export interface Assignment {
   materials?: { title: string; note?: string; items: string[]; ordered?: boolean }[]
   deliverable: string
   checklist: string[]
+  /** Marks the assignment done automatically once she has this many news diary entries. */
+  doneWhenDiaryEntries?: number
 }
 
 interface QuestionBase {
@@ -72,6 +74,8 @@ interface QuestionBase {
   explanation: string
   /** Lesson to point back to after answering. */
   lessonSlug?: string
+  /** Week of that lesson, when it differs from the quiz's own week (phase reviews). */
+  lessonWeek?: number
 }
 
 export interface SingleChoiceQuestion extends QuestionBase {
@@ -114,6 +118,22 @@ export interface WeekContent {
   quiz: Quiz
   journalPrompt: string
   resources: Resource[]
+}
+
+/** Longer quiz covering a whole phase. It sits in the last week of the phase. */
+export interface PhaseReview {
+  phase: number
+  quiz: Quiz
+}
+
+export interface ToolkitChecklist {
+  id: string
+  title: string
+  summary: string
+  /** Week that teaches it. Shown from that week on. */
+  week: number
+  groups: { heading?: string; items: string[] }[]
+  sources: Source[]
 }
 
 export interface GlossaryTerm {

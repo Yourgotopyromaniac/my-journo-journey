@@ -1,0 +1,271 @@
+import type { PhaseReview } from '@/content/types'
+
+/** Phase 1 review: 18 questions across Weeks 1 to 6. Each links back to its lesson. */
+const review: PhaseReview = {
+  phase: 1,
+  quiz: {
+    id: 'phase-1-review',
+    title: 'Phase 1 review: Foundations of journalism',
+    questions: [
+      {
+        id: 'p1',
+        type: 'single',
+        prompt: 'What do Kovach and Rosenstiel call the essence of journalism?',
+        options: [
+          { id: 'a', text: 'A discipline of verification' },
+          { id: 'b', text: 'Being first with the news' },
+          { id: 'c', text: 'Entertaining the audience' },
+          { id: 'd', text: 'Reporting what officials say' },
+        ],
+        answer: 'a',
+        explanation: 'Checking information before publishing is what separates journalism from rumour and gossip.',
+        lessonSlug: 'what-journalism-is-for',
+        lessonWeek: 1,
+      },
+      {
+        id: 'p2',
+        type: 'single',
+        prompt: 'In a newsroom, who usually gives final approval for a story to be published?',
+        options: [
+          { id: 'a', text: 'An editor' },
+          { id: 'b', text: 'The reporter' },
+          { id: 'c', text: 'The person interviewed' },
+          { id: 'd', text: 'The social media editor' },
+        ],
+        answer: 'a',
+        explanation:
+          'A sub-editor checks and improves the story, but an editor approves it for publication. Learning from edits is part of the job.',
+        lessonSlug: 'who-does-what',
+        lessonWeek: 1,
+      },
+      {
+        id: 'p3',
+        type: 'truefalse',
+        prompt: 'The Digital News Report 2026 figures for Nigeria describe all Nigerians.',
+        answer: false,
+        explanation:
+          'The survey covers English-speaking internet users aged 18 to 50, who tend to be younger, richer and more urban than most Nigerians. Always say who was surveyed.',
+        lessonSlug: 'how-news-reaches-people',
+        lessonWeek: 1,
+      },
+      {
+        id: 'p4',
+        type: 'multi',
+        prompt: 'A governor announces a new tax on market traders in Lagos, starting next week. Which news values does the story show? Choose all that apply.',
+        options: [
+          { id: 'a', text: 'Prominence' },
+          { id: 'b', text: 'Impact' },
+          { id: 'c', text: 'Timeliness' },
+          { id: 'd', text: 'Novelty' },
+        ],
+        answer: ['a', 'b', 'c'],
+        explanation:
+          'A governor is prominent, a new tax affects many people, and it starts next week. Nothing suggests it is especially unusual, so novelty is not the main value.',
+        lessonSlug: 'what-makes-news',
+        lessonWeek: 2,
+      },
+      {
+        id: 'p5',
+        type: 'single',
+        prompt: 'Which lede is strongest?',
+        options: [
+          { id: 'a', text: 'Traders in Lagos markets will pay a new daily tax from next Monday, the governor said on Tuesday.' },
+          { id: 'b', text: 'On Tuesday, the governor held a meeting at Government House, Alausa.' },
+          { id: 'c', text: 'Taxes are a hot topic in Nigeria today.' },
+          { id: 'd', text: '"We must all contribute," the governor said.' },
+        ],
+        answer: 'a',
+        explanation:
+          'Option A says who is affected, what changes and when, with attribution. B starts with a meeting, C is vague, and D starts with a quote.',
+        lessonSlug: 'writing-a-strong-lede',
+        lessonWeek: 2,
+      },
+      {
+        id: 'p6',
+        type: 'single',
+        prompt: 'Why can editors cut an inverted pyramid story from the bottom?',
+        options: [
+          { id: 'a', text: 'Because the least important information is at the end' },
+          { id: 'b', text: 'Because quotes always come last' },
+          { id: 'c', text: 'Because the lede is at the bottom' },
+          { id: 'd', text: 'Because readers never reach the end' },
+        ],
+        answer: 'a',
+        explanation: 'The inverted pyramid puts the most important facts first, so cutting the last paragraphs removes the least important material.',
+        lessonSlug: 'inverted-pyramid',
+        lessonWeek: 2,
+      },
+      {
+        id: 'p7',
+        type: 'single',
+        prompt: 'A minister’s quote has an awkward phrase that is hard to follow. What should you do?',
+        options: [
+          { id: 'a', text: 'Use reported speech to give the meaning clearly' },
+          { id: 'b', text: 'Reword the quote but keep the quotation marks' },
+          { id: 'c', text: 'Make it a partial quote around the awkward phrase' },
+          { id: 'd', text: 'Leave it out of the story and do not mention the point' },
+        ],
+        answer: 'a',
+        explanation: 'Never change words inside quotation marks. If a quote is unclear, report the meaning in your own words.',
+        lessonSlug: 'using-quotes',
+        lessonWeek: 3,
+      },
+      {
+        id: 'p8',
+        type: 'single',
+        prompt: 'Which attribution verb is neutral?',
+        options: [
+          { id: 'a', text: 'said' },
+          { id: 'b', text: 'admitted' },
+          { id: 'c', text: 'claimed' },
+          { id: 'd', text: 'lamented' },
+        ],
+        answer: 'a',
+        explanation: '"Said" reports that someone spoke without adding a judgement. The others suggest confession, doubt or emotion.',
+        lessonSlug: 'attribution',
+        lessonWeek: 3,
+      },
+      {
+        id: 'p9',
+        type: 'truefalse',
+        prompt: 'All Nigerian newspapers follow the same style for naira, numbers and titles.',
+        answer: false,
+        explanation:
+          'Styles differ. For example, some outlets use Mr and Mrs after first mention and others use surnames alone. What matters is consistency within one outlet.',
+        lessonSlug: 'style-and-headlines',
+        lessonWeek: 3,
+      },
+      {
+        id: 'p10',
+        type: 'single',
+        prompt: 'Which is the best way to begin a phone interview?',
+        options: [
+          { id: 'a', text: 'Say who you are, who you work for, and what the interview is about' },
+          { id: 'b', text: 'Ask your hardest question straight away' },
+          { id: 'c', text: 'Start recording without saying anything' },
+          { id: 'd', text: 'Send all your questions first and wait for written answers' },
+        ],
+        answer: 'a',
+        explanation: 'People have a right to know they are talking to a journalist. Say who you are at once, and ask before recording.',
+        lessonSlug: 'during-the-interview',
+        lessonWeek: 4,
+      },
+      {
+        id: 'p11',
+        type: 'single',
+        prompt: 'Why should you agree what "off the record" means before a source shares information?',
+        options: [
+          { id: 'a', text: 'Because people understand the term differently' },
+          { id: 'b', text: 'Because it has one legal meaning in Nigeria' },
+          { id: 'c', text: 'Because it means you can publish anything' },
+          { id: 'd', text: 'Because only editors can use the term' },
+        ],
+        answer: 'a',
+        explanation:
+          'Some people mean "do not publish", others mean "do not name me". Agree the terms clearly, write them down, and keep your promise.',
+        lessonSlug: 'recording-notes-and-ground-rules',
+        lessonWeek: 4,
+      },
+      {
+        id: 'p12',
+        type: 'truefalse',
+        prompt: 'Eyewitnesses should usually be treated as secondary sources.',
+        answer: true,
+        explanation:
+          'The News Manual advises treating most eyewitnesses as secondary sources, because memory and viewpoint shape what people report. Check what they tell you.',
+        lessonSlug: 'sources-and-safety',
+        lessonWeek: 4,
+      },
+      {
+        id: 'p13',
+        type: 'single',
+        prompt: 'At a press event, an official offers journalists envelopes "for transport". What does Article 7 of the Nigerian code say?',
+        options: [
+          { id: 'a', text: 'Journalists should not solicit or accept gratification to suppress or publish information' },
+          { id: 'b', text: 'Journalists may accept money if they still write fairly' },
+          { id: 'c', text: 'Only editors may accept such payments' },
+          { id: 'd', text: 'The code does not cover payments' },
+        ],
+        answer: 'a',
+        explanation: 'Article 7 forbids soliciting or accepting bribes or gratification. Politely refuse, and tell your editor about the offer.',
+        lessonSlug: 'brown-envelopes-and-conflicts',
+        lessonWeek: 5,
+      },
+      {
+        id: 'p14',
+        type: 'multi',
+        prompt: 'Which help protect survivors of sexual violence in your reporting? Choose all that apply.',
+        options: [
+          { id: 'a', text: 'Leaving out details, such as a school or street, that could identify them' },
+          { id: 'b', text: 'Letting them withdraw consent at any stage' },
+          { id: 'c', text: 'Explaining consent in a language they understand' },
+          { id: 'd', text: 'Publishing their photo with the face blurred slightly' },
+        ],
+        answer: ['a', 'b', 'c'],
+        explanation:
+          'Survivors must not be identifiable, can change their minds, and should understand what they agree to. A lightly blurred photo can still identify someone.',
+        lessonSlug: 'minimising-harm',
+        lessonWeek: 5,
+      },
+      {
+        id: 'p15',
+        type: 'order',
+        prompt: 'Put these steps for handling a mistake in your published story in the best order.',
+        items: [
+          { id: 'tell', text: 'Tell your editor straight away' },
+          { id: 'check', text: 'Confirm the correct information' },
+          { id: 'fix', text: 'Fix the story' },
+          { id: 'note', text: 'Add a clear correction saying what was wrong and what is right' },
+        ],
+        explanation:
+          'Tell your editor first, confirm the right facts, fix the story, and add a clearly labelled correction. Never change a story quietly.',
+        lessonSlug: 'when-journalists-get-it-wrong',
+        lessonWeek: 5,
+      },
+      {
+        id: 'p16',
+        type: 'truefalse',
+        prompt: 'Criminal defamation still exists in Nigeria’s Criminal Code and Penal Code.',
+        answer: true,
+        explanation:
+          'Both codes still contain defamation offences, and the Supreme Court upheld the Penal Code offences in 2021. The Criminal Law of Lagos State 2011 leaves it out, but Lagos has other offences such as false news.',
+        lessonSlug: 'defamation',
+        lessonWeek: 6,
+      },
+      {
+        id: 'p17',
+        type: 'single',
+        prompt: 'Under the FOI Act, what must you give when you ask a public institution for information?',
+        options: [
+          { id: 'a', text: 'A clear description of what you want. You do not need to give a reason.' },
+          { id: 'b', text: 'A reason, and proof that you are a journalist' },
+          { id: 'c', text: 'A lawyer’s letter' },
+          { id: 'd', text: 'A fee for the time spent searching' },
+        ],
+        answer: 'a',
+        explanation:
+          'Any person can apply, and the Act says you do not need to show a specific interest. Fees are limited to standard copying and transcription costs.',
+        lessonSlug: 'freedom-of-information',
+        lessonWeek: 6,
+      },
+      {
+        id: 'p18',
+        type: 'single',
+        prompt: 'You want to use a photographer’s concert photo in your review. What is the safest choice?',
+        options: [
+          { id: 'a', text: 'Get permission, use your own photo, or rely on fair dealing with credit only if the use is fair' },
+          { id: 'b', text: 'Use it, because it is on Instagram and public' },
+          { id: 'c', text: 'Use it without credit, because reviews are always allowed' },
+          { id: 'd', text: 'Crop it so the photographer cannot recognise it' },
+        ],
+        answer: 'a',
+        explanation:
+          'Being online does not make a photo free to use. Fair dealing for review depends on factors like how much you use and the effect on the photographer’s market, and needs credit where practicable.',
+        lessonSlug: 'cybercrime-copyright-and-more',
+        lessonWeek: 6,
+      },
+    ],
+  },
+}
+
+export default review

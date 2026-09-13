@@ -122,6 +122,7 @@ const week: WeekContent = {
         'Skip the news values for now if you are not sure. You learn them in Week 2.',
       ],
       deliverable: 'At least five entries in your news diary, from at least three different outlets.',
+      doneWhenDiaryEntries: 5,
       checklist: [
         'I added at least five stories.',
         'My stories come from at least three different outlets.',

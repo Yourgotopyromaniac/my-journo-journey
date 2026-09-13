@@ -71,6 +71,7 @@ const progressSchema = z.object({
   ),
   lastLesson: z.object({ week: z.number().int(), slug: z.string() }).nullable(),
   lastBackupAt: z.string().nullable(),
+  dismissedMilestones: z.array(z.number().int()),
 })
 
 const backupSchema = z.object({

@@ -7,7 +7,9 @@ import { Button } from '@/components/ui/button'
 import { Field, Input, Textarea } from '@/components/ui/field'
 import { getWeekContent } from '@/content'
 import { cn } from '@/lib/cn'
-import { useDocumentTitle } from '@/lib/hooks'
+import { useDocumentTitle, useProgressData } from '@/lib/hooks'
+import { assignmentStatus } from '@/lib/progress'
+import { ProgressBar } from '@/components/ui/progress-bar'
 import { useProgress, type AssignmentStatus } from '@/store/progress'
 
 const STATUS_LABEL: Record<AssignmentStatus, string> = {
@@ -24,11 +26,14 @@ export default function AssignmentPage() {
   useDocumentTitle(assignment?.title ?? 'Page not found')
 
   const saved = useProgress((s) => (assignment ? s.assignments[assignment.id] : undefined))
+  const diaryCount = useProgress((s) => s.diary.length)
   const updateAssignment = useProgress((s) => s.updateAssignment)
+  const data = useProgressData()
 
   if (!content || !assignment) return <NotFoundPage />
 
-  const status = saved?.status ?? 'not-started'
+  const status = assignmentStatus(assignment, data)
+  const diaryTarget = assignment.doneWhenDiaryEntries
   const checklist = assignment.checklist.map((_, i) => saved?.checklist[i] ?? false)
   const checkedCount = checklist.filter(Boolean).length
   const index = content.assignments.findIndex((a) => a.id === assignment.id)
@@ -94,10 +99,12 @@ export default function AssignmentPage() {
             <p>{assignment.deliverable}</p>
           </div>
 
-          <Box className="mt-8 p-4 text-sm leading-relaxed text-ink-2">
-            Write your work in Google Docs. Paste its link under "Link to your work" so you can find it again. Keep the
-            document private for now.
-          </Box>
+          {diaryTarget === undefined ? (
+            <Box className="mt-8 p-4 text-sm leading-relaxed text-ink-2">
+              Write your work in Google Docs. Paste its link under "Link to your work" so you can find it again. Keep the
+              document private for now.
+            </Box>
+          ) : null}
         </article>
 
         <aside className="flex flex-col gap-5 lg:pt-24">
@@ -136,6 +143,7 @@ export default function AssignmentPage() {
             </Box>
           </section>
 
+          {diaryTarget === undefined ? (
           <Field label="Link to your work" hint="For example, your Google Doc.">
             {(p) => (
               <>
@@ -163,6 +171,7 @@ export default function AssignmentPage() {
               </>
             )}
           </Field>
+          ) : null}
 
           <Field label="Notes" hint="Anything you want to remember or ask about.">
             {(p) => (
@@ -174,6 +183,28 @@ export default function AssignmentPage() {
             )}
           </Field>
 
+          {diaryTarget !== undefined ? (
+            <Box className="p-4">
+              <div className="flex items-baseline justify-between text-sm">
+                <span className="font-semibold">News diary entries</span>
+                <span className="text-ink-2">
+                  {Math.min(diaryCount, diaryTarget)} of {diaryTarget}
+                </span>
+              </div>
+              <ProgressBar value={diaryCount / diaryTarget} label="News diary entries" className="mt-2" />
+              <p className="mt-2 text-[0.8125rem] text-ink-3">
+                {diaryCount >= diaryTarget
+                  ? 'Done. This assignment was ticked off for you.'
+                  : 'This assignment ticks itself off when you reach the target.'}
+              </p>
+              {diaryCount < diaryTarget ? (
+                <Button variant="secondary" size="sm" className="mt-3" asChild>
+                  <Link to="/diary?new=1">Add a story</Link>
+                </Button>
+              ) : null}
+            </Box>
+          ) : null}
+
           {status === 'done' ? (
             <Box className="p-4">
               <div className="font-serif text-xl font-semibold">Assignment done.</div>
@@ -183,12 +214,14 @@ export default function AssignmentPage() {
                     {next ? 'Next assignment' : 'Back to the week'} <ArrowRight />
                   </Link>
                 </Button>
-                <Button variant="ghost" onClick={() => updateAssignment(assignment.id, { status: 'in-progress' })}>
-                  Mark as not done
-                </Button>
+                {saved?.status === 'done' ? (
+                  <Button variant="ghost" onClick={() => updateAssignment(assignment.id, { status: 'in-progress' })}>
+                    Mark as not done
+                  </Button>
+                ) : null}
               </div>
             </Box>
-          ) : (
+          ) : diaryTarget !== undefined ? null : (
             <div>
               <Button size="lg" className="w-full" onClick={() => updateAssignment(assignment.id, { status: 'done' })}>
                 <Check /> Mark as done

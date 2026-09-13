@@ -23,6 +23,7 @@ import { canTakeFlexWeek, daysLeftInSlot, programmeStatus, slotForWeek } from '@
 import { lessonKey } from '@/store/progress'
 import { WeekChecklist } from '../week/WeekChecklist'
 import { PacingDot, pacingText } from './PacingNote'
+import { DashboardMilestone } from './PhaseMilestone'
 
 function stepLabel(step: NextStep): string {
   switch (step.kind) {
@@ -31,6 +32,7 @@ function stepLabel(step: NextStep): string {
     case 'assignment':
       return 'Assignment'
     case 'quiz':
+    case 'phase-review':
       return 'Quiz'
     default:
       return ''
@@ -84,6 +86,7 @@ export default function DashboardPage() {
 
       {status.state === 'not-started' ? <BeforeStart daysToGo={status.daysToGo} /> : null}
       {calendarSlot?.kind === 'flex' ? <FlexWeekNote christmas={calendarSlot.flex === 'christmas'} /> : null}
+      <DashboardMilestone />
 
       {primary && primary.kind !== 'not-written' && primary.kind !== 'done' ? (
         <Box className="mt-6 flex flex-col gap-4 p-5 sm:flex-row sm:items-center">
@@ -145,6 +148,14 @@ export default function DashboardPage() {
                 total={1}
                 text={progress.quiz.passed ? 'Passed' : progress.quiz.taken ? 'Try again' : 'Not taken'}
               />
+              {progress.phaseReview ? (
+                <GoalRow
+                  label={`Phase ${phase.number} review`}
+                  done={progress.phaseReview.passed ? 1 : 0}
+                  total={1}
+                  text={progress.phaseReview.passed ? 'Passed' : progress.phaseReview.taken ? 'Try again' : 'Not taken'}
+                />
+              ) : null}
               <GoalRow label="News diary" done={Math.min(diaryCount, PROGRAMME.diaryTarget)} total={PROGRAMME.diaryTarget} text={`${diaryCount}/${PROGRAMME.diaryTarget}`} />
             </dl>
           </Box>

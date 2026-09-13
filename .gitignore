@@ -30,3 +30,6 @@ dev-dist
 coverage
 test-results
 playwright-report
+
+# Design canvas and mockup files (kept locally, not in the repo)
+design/

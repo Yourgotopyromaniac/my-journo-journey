@@ -2,8 +2,9 @@ import { ChevronRight } from 'lucide-react'
 import { Link } from 'react-router'
 import { Box } from '@/components/ui/box'
 import { StatusIcon, type Status } from '@/components/ui/status-icon'
-import { getWeekContent } from '@/content'
+import { getWeekContent, phaseReviewForWeek } from '@/content'
 import { cn } from '@/lib/cn'
+import { assignmentStatus } from '@/lib/progress'
 import { summariseAttempts } from '@/lib/quiz'
 import { lessonKey, type ProgressData } from '@/store/progress'
 
@@ -16,7 +17,7 @@ interface Row {
   status: Status
 }
 
-export function weekRows(week: number, data: ProgressData): Row[] {
+function weekRows(week: number, data: ProgressData): Row[] {
   const content = getWeekContent(week)
   if (!content) return []
   const rows: Row[] = []
@@ -33,7 +34,7 @@ export function weekRows(week: number, data: ProgressData): Row[] {
     })
   }
   for (const a of content.assignments) {
-    const s = data.assignments[a.id]?.status ?? 'not-started'
+    const s = assignmentStatus(a, data)
     rows.push({
       key: `a-${a.id}`,
       href: `/week/${week}/assignment/${a.id}`,
@@ -52,6 +53,18 @@ export function weekRows(week: number, data: ProgressData): Row[] {
     meta: `${content.quiz.questions.length} questions`,
     status: quiz.passed ? 'done' : quiz.taken ? 'current' : 'todo',
   })
+  const review = phaseReviewForWeek(week)
+  if (review) {
+    const r = summariseAttempts(data.quizAttempts[review.quiz.id], review.quiz.questions.length)
+    rows.push({
+      key: 'phase-review',
+      href: `/phase/${review.phase}/review`,
+      title: `Phase ${review.phase} review quiz`,
+      type: 'Quiz',
+      meta: `${review.quiz.questions.length} questions`,
+      status: r.passed ? 'done' : r.taken ? 'current' : 'todo',
+    })
+  }
   return rows
 }
 

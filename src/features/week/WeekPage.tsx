@@ -61,13 +61,14 @@ export default function WeekPage() {
             <p className="max-w-prose font-serif text-[1.1875rem] leading-relaxed text-ink">{content.overview}</p>
 
             <section className="mt-7">
-              <SectionHeading title="Your plan" aside={`${progress.lessonsDone + progress.assignmentsDone + (progress.quiz.passed ? 1 : 0)} of ${progress.lessonsTotal + progress.assignmentsTotal + 1} done`} />
+              <SectionHeading title="Your plan" aside={`${progress.itemsDone} of ${progress.itemsTotal} done`} />
               <WeekChecklist week={week} data={data} />
             </section>
 
             {isLastWeekOfPhase(week) ? (
               <p className="mt-3 text-[0.8125rem] text-ink-3">
-                This is the last week of Phase {phase.number}. A longer review quiz for the whole phase comes after it.
+                This is the last week of Phase {phase.number}. The phase review quiz covers every week of the phase, so do it
+                last.
               </p>
             ) : null}
 

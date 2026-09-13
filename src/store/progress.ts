@@ -77,6 +77,8 @@ export interface ProgressData {
   diary: DiaryEntry[]
   lastLesson: { week: number; slug: string } | null
   lastBackupAt: string | null
+  /** Phases whose "complete" card she has closed on the dashboard. */
+  dismissedMilestones: number[]
 }
 
 interface ProgressActions {
@@ -102,6 +104,7 @@ interface ProgressActions {
   saveDiaryEntry: (entry: Omit<DiaryEntry, 'id' | 'createdAt'> & { id?: string }) => void
   deleteDiaryEntry: (id: string) => void
 
+  dismissMilestone: (phase: number) => void
   markBackedUp: () => void
   replaceAll: (data: ProgressData) => void
   resetAll: () => void
@@ -124,6 +127,7 @@ export const initialData = (): ProgressData => ({
   diary: [],
   lastLesson: null,
   lastBackupAt: null,
+  dismissedMilestones: [],
 })
 
 export const lessonKey = (week: number, slug: string) => `w${week}/${slug}`
@@ -272,6 +276,9 @@ export const useProgress = create<ProgressState>()(
         }),
 
       deleteDiaryEntry: (id) => setState((s) => ({ diary: s.diary.filter((d) => d.id !== id) })),
+
+      dismissMilestone: (phase) =>
+        setState((s) => ({ dismissedMilestones: [...new Set([...s.dismissedMilestones, phase])] })),
 
       markBackedUp: () => setState({ lastBackupAt: now() }),
 

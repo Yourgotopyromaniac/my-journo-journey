@@ -1,10 +1,21 @@
-import { PROGRAMME, WEEKS } from '@/content/course'
-import { getWeekContent } from '@/content'
-import type { WeekContent } from '@/content/types'
-import { lessonKey, type ProgressData } from '@/store/progress'
+import { PROGRAMME, WEEKS, weeksInPhase } from '@/content/course'
+import { getWeekContent, phaseReviewForWeek } from '@/content'
+import type { Assignment } from '@/content/types'
+import { lessonKey, type AssignmentStatus, type ProgressData } from '@/store/progress'
 import { summariseAttempts, type QuizSummary } from './quiz'
-import { scheduledWeek, slotForWeek, type Slot } from './schedule'
+import { scheduledWeek, type Slot } from './schedule'
 import type { IsoDate } from './dates'
+
+/** Assignment status, including ones that complete themselves (such as the news diary). */
+export function assignmentStatus(assignment: Assignment, data: ProgressData): AssignmentStatus {
+  const saved = data.assignments[assignment.id]?.status ?? 'not-started'
+  if (saved === 'done') return 'done'
+  if (assignment.doneWhenDiaryEntries !== undefined) {
+    if (data.diary.length >= assignment.doneWhenDiaryEntries) return 'done'
+    if (data.diary.length > 0) return 'in-progress'
+  }
+  return saved
+}
 
 export interface WeekProgress {
   week: number
@@ -14,11 +25,17 @@ export interface WeekProgress {
   assignmentsDone: number
   assignmentsTotal: number
   quiz: QuizSummary
+  /** Present only in the last week of a phase that has a review quiz. */
+  phaseReview?: QuizSummary
+  itemsDone: number
+  itemsTotal: number
   complete: boolean
   started: boolean
-  /** 0 to 1, lessons + assignments + quiz, each item counting once. */
+  /** 0 to 1, each lesson, assignment and quiz counting once. */
   fraction: number
 }
+
+const emptyQuiz: QuizSummary = { taken: false, passed: false, attempts: 0, bestCorrect: 0, total: 0 }
 
 export function weekProgress(week: number, data: ProgressData): WeekProgress {
   const content = getWeekContent(week)
@@ -30,37 +47,43 @@ export function weekProgress(week: number, data: ProgressData): WeekProgress {
       lessonsTotal: 0,
       assignmentsDone: 0,
       assignmentsTotal: 0,
-      quiz: { taken: false, passed: false, attempts: 0, bestCorrect: 0, total: 0 },
+      quiz: emptyQuiz,
+      itemsDone: 0,
+      itemsTotal: 0,
       complete: false,
       started: false,
       fraction: 0,
     }
   }
-  return progressFor(content, data)
-}
 
-function progressFor(content: WeekContent, data: ProgressData): WeekProgress {
-  const lessonsDone = content.lessons.filter((l) => data.lessons[lessonKey(content.number, l.slug)]?.completedAt).length
-  const assignmentsDone = content.assignments.filter((a) => data.assignments[a.id]?.status === 'done').length
+  const lessonsDone = content.lessons.filter((l) => data.lessons[lessonKey(week, l.slug)]?.completedAt).length
+  const assignmentsDone = content.assignments.filter((a) => assignmentStatus(a, data) === 'done').length
   const quiz = summariseAttempts(data.quizAttempts[content.quiz.id], content.quiz.questions.length)
-  const totalItems = content.lessons.length + content.assignments.length + 1
-  const doneItems = lessonsDone + assignmentsDone + (quiz.passed ? 1 : 0)
+  const review = phaseReviewForWeek(week)
+  const phaseReview = review ? summariseAttempts(data.quizAttempts[review.quiz.id], review.quiz.questions.length) : undefined
+
+  const itemsTotal = content.lessons.length + content.assignments.length + 1 + (phaseReview ? 1 : 0)
+  const itemsDone = lessonsDone + assignmentsDone + (quiz.passed ? 1 : 0) + (phaseReview?.passed ? 1 : 0)
   const started =
-    doneItems > 0 ||
-    content.lessons.some((l) => data.lessons[lessonKey(content.number, l.slug)]?.openedAt) ||
-    content.assignments.some((a) => (data.assignments[a.id]?.status ?? 'not-started') !== 'not-started') ||
+    itemsDone > 0 ||
+    content.lessons.some((l) => data.lessons[lessonKey(week, l.slug)]?.openedAt) ||
+    content.assignments.some((a) => assignmentStatus(a, data) !== 'not-started') ||
     quiz.taken
+
   return {
-    week: content.number,
+    week,
     written: true,
     lessonsDone,
     lessonsTotal: content.lessons.length,
     assignmentsDone,
     assignmentsTotal: content.assignments.length,
     quiz,
-    complete: doneItems === totalItems,
+    phaseReview,
+    itemsDone,
+    itemsTotal,
+    complete: itemsDone === itemsTotal,
     started,
-    fraction: doneItems / totalItems,
+    fraction: itemsDone / itemsTotal,
   }
 }
 
@@ -70,6 +93,11 @@ export function currentLearningWeek(data: ProgressData): number {
     if (!weekProgress(w.number, data).complete) return w.number
   }
   return PROGRAMME.totalWeeks
+}
+
+export function isPhaseComplete(phase: number, data: ProgressData): boolean {
+  const weeks = weeksInPhase(phase)
+  return weeks.length > 0 && weeks.every((w) => weekProgress(w.number, data).complete)
 }
 
 export type Pacing =
@@ -88,12 +116,6 @@ export function pacing(data: ProgressData, slots: Slot[], date: IsoDate): Pacing
   return { state: 'behind', weeks: gap }
 }
 
-export function diaryCountInWeek(data: ProgressData, slots: Slot[], week: number): number {
-  const slot = slotForWeek(slots, week)
-  if (!slot) return 0
-  return data.diary.filter((d) => d.date >= slot.start && d.date <= slot.end).length
-}
-
 export function diaryCountBetween(data: ProgressData, start: IsoDate, end: IsoDate): number {
   return data.diary.filter((d) => d.date >= start && d.date <= end).length
 }
@@ -107,6 +129,7 @@ export type NextStep =
   | { kind: 'lesson'; week: number; slug: string; title: string; minutes: number }
   | { kind: 'assignment'; week: number; id: string; title: string; minutes: number }
   | { kind: 'quiz'; week: number; title: string; questions: number }
+  | { kind: 'phase-review'; week: number; phase: number; title: string; questions: number }
   | { kind: 'done'; week: number }
   | { kind: 'not-written'; week: number }
 
@@ -120,19 +143,29 @@ export function nextSteps(week: number, data: ProgressData, limit = 3): NextStep
     }
   }
   for (const a of content.assignments) {
-    if (data.assignments[a.id]?.status !== 'done') {
+    if (assignmentStatus(a, data) !== 'done') {
       steps.push({ kind: 'assignment', week, id: a.id, title: a.title, minutes: a.minutes })
     }
   }
   if (!summariseAttempts(data.quizAttempts[content.quiz.id], content.quiz.questions.length).passed) {
     steps.push({ kind: 'quiz', week, title: 'Checkpoint quiz', questions: content.quiz.questions.length })
   }
+  const review = phaseReviewForWeek(week)
+  if (review && !summariseAttempts(data.quizAttempts[review.quiz.id], review.quiz.questions.length).passed) {
+    steps.push({
+      kind: 'phase-review',
+      week,
+      phase: review.phase,
+      title: `Phase ${review.phase} review quiz`,
+      questions: review.quiz.questions.length,
+    })
+  }
   return steps.length ? steps.slice(0, limit) : [{ kind: 'done', week }]
 }
 
 export function stepMinutes(step: NextStep): number | undefined {
   if (step.kind === 'lesson' || step.kind === 'assignment') return step.minutes
-  if (step.kind === 'quiz') return Math.max(5, Math.round(step.questions * 1.25))
+  if (step.kind === 'quiz' || step.kind === 'phase-review') return Math.max(5, Math.round(step.questions * 1.25))
   return undefined
 }
 
@@ -144,6 +177,8 @@ export function stepHref(step: NextStep): string {
       return `/week/${step.week}/assignment/${step.id}`
     case 'quiz':
       return `/week/${step.week}/quiz`
+    case 'phase-review':
+      return `/phase/${step.phase}/review`
     default:
       return `/week/${step.week}`
   }
