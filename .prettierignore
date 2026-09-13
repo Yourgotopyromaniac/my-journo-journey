@@ -1,0 +1,6 @@
+dist
+dev-dist
+node_modules
+design
+package-lock.json
+docs/reference
